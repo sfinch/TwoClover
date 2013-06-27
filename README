@@ -1,0 +1,3 @@
+Geant4 simulation of two clover HPGe detectors with a NaI veto
+
+version 1: started from TwoCoax code:  https://github.com/sfinch/TwoCoax

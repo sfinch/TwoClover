@@ -1,0 +1,13 @@
+# Macro to control particle source creation
+
+# Set particle type, energy
+/gps/particle gamma
+/gps/energy 1000 keV
+
+# Set point source position in absolute coordinates
+/gps/position 0 0 0 cm
+
+# Set isotropic distribution
+#/gps/ang/mintheta 3.14159 rad
+#/gps/ang/rot1 0 1 0
+/gps/ang/type iso

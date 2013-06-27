@@ -1,0 +1,8 @@
+# Macro File
+
+#turn off visulizer
+/vis/disable
+#only print ever 10000 events
+/TwoClover/event/printModulo 10000
+#run 1000000 events
+/run/beamOn 1000000
