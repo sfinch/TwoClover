@@ -32,12 +32,12 @@ class Clover
      void SetWindowMaterial (G4String);     
      void SetWallMaterial (G4String);     
 
-     void SetCrystalHalfLength(G4double);
-     void SetCrystalRad(G4double);
-     void SetCrystalEndRad(G4double);
-     void SetHoleRad(G4double);
-     void SetHoleDepth(G4double);
-     void SetDeadLayerThick(G4double);
+     void SetCrystalHalfLength(int, G4double);
+     void SetCrystalRad(int, G4double);
+     void SetCrystalEndRad(int, G4double);
+     void SetHoleRad(int, G4double);
+     void SetHoleDepth(int, G4double);
+     void SetDeadLayerThick(int, G4double);
 
      void SetShellHalfLength(G4double);
      void SetEndGap(G4double);
@@ -53,12 +53,12 @@ class Clover
   
      G4String GetName()					{return name;};
 
-     G4double GetCrystalHalfLength()	{return crystalHalfLength;};
-     G4double GetCrystalRad()			{return crystalRad;}; 
-     G4double GetCrystalEndRad()		{return crystalEndRad;};
-     G4double GetHoleRad()				{return holeRad;};
-     G4double GetHoleDepthRad()			{return holeDepth;};
-     G4double GetDeadLayerThick()		{return deadLayerThick;};
+     G4double GetCrystalHalfLength(int seg);
+     G4double GetCrystalRad(int seg);
+     G4double GetCrystalEndRad(int seg);
+     G4double GetHoleRad(int seg);
+     G4double GetHoleDepthRad(int seg);
+     G4double GetDeadLayerThick(int seg);
       
      G4double GetShellHalfLength()		{return shellHalfLength;}; 
      G4double GetEndGap()				{return endGap;};
@@ -69,7 +69,7 @@ class Clover
      G4Material* GetWindowMaterial()    {return windowMaterial;};
      G4Material* GetWallMaterial()      {return wallMaterial;};
      
-     const G4VPhysicalVolume* GetCrystal()   {return physiCrystal;};
+     const G4VPhysicalVolume* GetCrystal()   {return physiCrystal[0];};
                  
   private:
 
@@ -82,12 +82,12 @@ class Clover
      G4Material*        windowMaterial;
      G4Material*        wallMaterial;
      
-     G4double           crystalHalfLength;
-     G4double           crystalRad;
-     G4double           crystalEndRad;
-     G4double           holeRad;
-     G4double           holeDepth;
-     G4double           deadLayerThick;
+     G4double           crystalHalfLength[4];
+     G4double           crystalRad[4];
+     G4double           crystalEndRad[4];
+     G4double           holeRad[4];
+     G4double           holeDepth[4];
+     G4double           deadLayerThick[4];
 
      G4double           shellHalfLength;
      G4double           endGap;
@@ -96,19 +96,19 @@ class Clover
      
      G4Material*        defaultMaterial;
             
-	 G4VSolid *activeCrystal;
-	 G4VSolid *deadLayer;
-	 G4VSolid *hole;
+	 G4VSolid *activeCrystal[4];
+	 G4VSolid *deadLayer[4];
+	 G4VSolid *hole[4];
 
-     G4LogicalVolume *logCrystal;    //pointer to the logical crystal 
-     G4LogicalVolume *logDeadLayer;    //pointer to the logical dead layer
-     G4VPhysicalVolume *physiCrystal;    //pointer to the physical crystal 
-     G4VPhysicalVolume *physiDeadLayer;    //pointer to the physical dead layer
+     G4LogicalVolume *logCrystal[4];    //pointer to the logical crystal 
+     G4LogicalVolume *logDeadLayer[4];    //pointer to the logical dead layer
+     G4VPhysicalVolume *physiCrystal[4];    //pointer to the physical crystal 
+     G4VPhysicalVolume *physiDeadLayer[4];    //pointer to the physical dead layer
 
      G4LogicalVolume *logShell;    //pointer to the logical shell 
      G4VPhysicalVolume *physiShell;    //pointer to the physical shell 
      
-     G4LogicalVolume *logWindow;    //pointer to the logical shell 
+     G4LogicalVolume *logWindow;        //pointer to the logical shell 
      G4VPhysicalVolume *physiWindow;    //pointer to the physical shell 
 
 	 CloverMessenger* cloverMessenger;
@@ -123,6 +123,72 @@ class Clover
 inline void Clover::ComputeCloverParameters()
 {
 	
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+inline G4double Clover::GetCrystalHalfLength(int seg)		
+{
+  if (seg>=0 || seg<4){ 
+	return crystalHalfLength[seg];
+  }
+  else
+  	return 0;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+inline G4double Clover::GetCrystalRad(int seg)
+{
+  if (seg>=0 || seg<4){ 
+	return crystalRad[seg];
+  }
+  else
+  	return 0;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+inline G4double Clover::GetCrystalEndRad(int seg)
+{
+  if (seg>=0 || seg<4){ 
+	return crystalEndRad[seg];
+  }
+  else
+  	return 0;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+inline G4double Clover::GetHoleRad(int seg)
+{
+  if (seg>=0 || seg<4){ 
+	return holeRad[seg];
+  }
+  else
+  	return 0;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+inline G4double Clover::GetHoleDepthRad(int seg)
+{
+  if (seg>=0 || seg<4){ 
+	return holeDepth[seg];
+  }
+  else
+  	return 0;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+inline G4double Clover::GetDeadLayerThick(int seg)
+{
+  if (seg>=0 || seg<4){ 
+	return deadLayerThick[seg];
+  }
+  else
+  	return 0;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

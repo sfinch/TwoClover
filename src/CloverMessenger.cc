@@ -43,53 +43,57 @@ CloverMessenger::CloverMessenger(Clover* Det)
   WallMaterCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
   //crystal dimensions 
-  crap = dir+"setCrystalHalfLength";
-  CrystalHalfLengthCmd= new G4UIcmdWithADoubleAndUnit(crap.c_str(),this);
-  CrystalHalfLengthCmd->SetGuidance("Set the half length of the crystal.");
-  CrystalHalfLengthCmd->SetParameterName("Size",false);
-  CrystalHalfLengthCmd->SetRange("Size>0.");
-  CrystalHalfLengthCmd->SetUnitCategory("Length");    
-  CrystalHalfLengthCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
-  
-  crap = dir+"setCrystalRad";
-  CrystalRadCmd= new G4UIcmdWithADoubleAndUnit(crap.c_str(),this);
-  CrystalRadCmd->SetGuidance("Set the radius of the crystal.");
-  CrystalRadCmd->SetParameterName("Size",false);
-  CrystalRadCmd->SetRange("Size>0.");
-  CrystalRadCmd->SetUnitCategory("Length");    
-  CrystalRadCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
-  
-  crap = dir+"setCrystalEndRad";
-  CrystalEndRadCmd= new G4UIcmdWithADoubleAndUnit(crap.c_str(),this);
-  CrystalEndRadCmd->SetGuidance("Set the radius of rounding on the crystal's edge.");
-  CrystalEndRadCmd->SetParameterName("Size",false);
-  CrystalEndRadCmd->SetRange("Size>0.");
-  CrystalEndRadCmd->SetUnitCategory("Length");    
-  CrystalEndRadCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+  for (int i=0; i<4; i++){
+    G4String seg = i;
+	crap = dir+"setCrystal"+seg+"HalfLength";
+	CrystalHalfLengthCmd[i]= new G4UIcmdWithADoubleAndUnit(crap.c_str(),this);
+	CrystalHalfLengthCmd[i]->SetGuidance("Set the half length of the crystal.");
+	CrystalHalfLengthCmd[i]->SetParameterName("Size",false);
+	CrystalHalfLengthCmd[i]->SetRange("Size>0.");
+	CrystalHalfLengthCmd[i]->SetUnitCategory("Length");    
+	CrystalHalfLengthCmd[i]->AvailableForStates(G4State_PreInit,G4State_Idle);
+	
+	crap = dir+"setCrystal"+seg+"Rad";
+	CrystalRadCmd[i]= new G4UIcmdWithADoubleAndUnit(crap.c_str(),this);
+	CrystalRadCmd[i]->SetGuidance("Set the radius of the crystal.");
+	CrystalRadCmd[i]->SetParameterName("Size",false);
+	CrystalRadCmd[i]->SetRange("Size>0.");
+	CrystalRadCmd[i]->SetUnitCategory("Length");    
+	CrystalRadCmd[i]->AvailableForStates(G4State_PreInit,G4State_Idle);
+	
+	crap = dir+"setCrystal"+seg+"EndRad";
+	CrystalEndRadCmd[i]= new G4UIcmdWithADoubleAndUnit(crap.c_str(),this);
+	CrystalEndRadCmd[i]->SetGuidance("Set the radius of rounding on the crystal's edge.");
+	CrystalEndRadCmd[i]->SetParameterName("Size",false);
+	CrystalEndRadCmd[i]->SetRange("Size>0.");
+	CrystalEndRadCmd[i]->SetUnitCategory("Length");    
+	CrystalEndRadCmd[i]->AvailableForStates(G4State_PreInit,G4State_Idle);
 
-  crap = dir+"setHoleRad";
-  HoleRadCmd= new G4UIcmdWithADoubleAndUnit(crap.c_str(),this);
-  HoleRadCmd->SetGuidance("Set the end radius of the hole in the crystal.");
-  HoleRadCmd->SetParameterName("Size",false);
-  HoleRadCmd->SetRange("Size>0.");
-  HoleRadCmd->SetUnitCategory("Length");    
-  HoleRadCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
-  
-  crap = dir+"setHoleDepth";
-  HoleDepthCmd= new G4UIcmdWithADoubleAndUnit(crap.c_str(),this);
-  HoleDepthCmd->SetGuidance("Set the depth of the hole in the crystal.");
-  HoleDepthCmd->SetParameterName("Size",false);
-  HoleDepthCmd->SetRange("Size>0.");
-  HoleDepthCmd->SetUnitCategory("Length");    
-  HoleDepthCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
-  
-  crap = dir+"setDeadLayer";
-  DeadLayerCmd= new G4UIcmdWithADoubleAndUnit(crap.c_str(),this);
-  DeadLayerCmd->SetGuidance("Set the thickness of the crystal's  dead layer.");
-  DeadLayerCmd->SetParameterName("Size",false);
-  DeadLayerCmd->SetRange("Size>0.");
-  DeadLayerCmd->SetUnitCategory("Length");    
-  DeadLayerCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+	crap = dir+"setHole"+seg+"Rad";
+	HoleRadCmd[i]= new G4UIcmdWithADoubleAndUnit(crap.c_str(),this);
+	HoleRadCmd[i]->SetGuidance("Set the end radius of the hole in the crystal.");
+	HoleRadCmd[i]->SetParameterName("Size",false);
+	HoleRadCmd[i]->SetRange("Size>0.");
+	HoleRadCmd[i]->SetUnitCategory("Length");    
+	HoleRadCmd[i]->AvailableForStates(G4State_PreInit,G4State_Idle);
+	  
+	crap = dir+"setHole"+seg+"Depth";
+	HoleDepthCmd[i]= new G4UIcmdWithADoubleAndUnit(crap.c_str(),this);
+	HoleDepthCmd[i]->SetGuidance("Set the depth of the hole in the crystal.");
+	HoleDepthCmd[i]->SetParameterName("Size",false);
+	HoleDepthCmd[i]->SetRange("Size>0.");
+	HoleDepthCmd[i]->SetUnitCategory("Length");    
+	HoleDepthCmd[i]->AvailableForStates(G4State_PreInit,G4State_Idle);
+	  
+	crap = dir+"setDeadLayer"+seg;
+	DeadLayerCmd[i]= new G4UIcmdWithADoubleAndUnit(crap.c_str(),this);
+	DeadLayerCmd[i]->SetGuidance("Set the thickness of the crystal's  dead layer.");
+	DeadLayerCmd[i]->SetParameterName("Size",false);
+	DeadLayerCmd[i]->SetRange("Size>0.");
+	DeadLayerCmd[i]->SetUnitCategory("Length");    
+	DeadLayerCmd[i]->AvailableForStates(G4State_PreInit,G4State_Idle);
+
+  }
   
   //Shell and window dimensions
   crap = dir+"setShellHalfLength";
@@ -131,9 +135,13 @@ CloverMessenger::CloverMessenger(Clover* Det)
 CloverMessenger::~CloverMessenger()
 {
   delete CrystalMaterCmd; delete WindowMaterCmd; delete WallMaterCmd;
-  delete CrystalHalfLengthCmd; delete CrystalRadCmd; delete CrystalEndRadCmd;
-  delete HoleRadCmd; delete HoleDepthCmd;
-  delete DeadLayerCmd;
+
+  for (int i=0; i<4; i++){
+  	delete CrystalHalfLengthCmd[i]; delete CrystalRadCmd[i]; delete CrystalEndRadCmd[i];
+  	delete HoleRadCmd[i]; delete HoleDepthCmd[i];
+  	delete DeadLayerCmd[i];
+  }
+
   delete ShellHalfLengthCmd; delete EndGapCmd;
   delete WindowThickCmd; delete WallThickCmd;
 
@@ -155,23 +163,26 @@ void CloverMessenger::SetNewValue(G4UIcommand* command,G4String newValue)
    { Detector->SetWallMaterial(newValue);}
   
   //Crystal dimensions
-  if( command == CrystalHalfLengthCmd )
-   { Detector->SetCrystalHalfLength(CrystalHalfLengthCmd->GetNewDoubleValue(newValue));}
+  for (int i=0; i<4; i++){
+  	 if( command == CrystalHalfLengthCmd[i])
+   	   { Detector->SetCrystalHalfLength(i, CrystalHalfLengthCmd[i]->GetNewDoubleValue(newValue));}
    
-  if( command == CrystalRadCmd )
-   { Detector->SetCrystalRad(CrystalRadCmd->GetNewDoubleValue(newValue));}
+ 	 if( command == CrystalRadCmd[i])
+	   { Detector->SetCrystalRad(i, CrystalRadCmd[i]->GetNewDoubleValue(newValue));}
    
-  if( command == CrystalEndRadCmd )
-   { Detector->SetCrystalEndRad(CrystalEndRadCmd->GetNewDoubleValue(newValue));}
+	 if( command == CrystalEndRadCmd[i])
+	   { Detector->SetCrystalEndRad(i, CrystalEndRadCmd[i]->GetNewDoubleValue(newValue));}
 
-  if( command == HoleRadCmd )
-   { Detector->SetHoleRad(HoleRadCmd->GetNewDoubleValue(newValue));}
+ 	 if( command == HoleRadCmd[i])
+ 	   { Detector->SetHoleRad(i, HoleRadCmd[i]->GetNewDoubleValue(newValue));}
    
-  if( command == HoleDepthCmd )
-   { Detector->SetHoleDepth(HoleDepthCmd->GetNewDoubleValue(newValue));}
+ 	 if( command == HoleDepthCmd[i])
+	   { Detector->SetHoleDepth(i, HoleDepthCmd[i]->GetNewDoubleValue(newValue));}
    
-  if( command == DeadLayerCmd )
-   { Detector->SetDeadLayerThick(DeadLayerCmd->GetNewDoubleValue(newValue));}
+ 	 if( command == DeadLayerCmd[i])
+ 	   { Detector->SetDeadLayerThick(i, DeadLayerCmd[i]->GetNewDoubleValue(newValue));}
+
+  }
    
    //Shell Dimensions
   if( command == ShellHalfLengthCmd )
