@@ -71,7 +71,7 @@ class Clover
      G4Material* GetWindowMaterial()    {return windowMaterial;};
      G4Material* GetWallMaterial()      {return wallMaterial;};
      
-     const G4VPhysicalVolume* GetCrystal()   {return physiCrystal[0];};
+     const G4VPhysicalVolume* GetCrystal(int seg);
 
 	 G4VSolid* roundedBox(G4double, G4double, G4double);
                  
@@ -200,6 +200,17 @@ inline G4double Clover::GetCrystalSeparation(int seg)
 {
   if (seg>=0 || seg<4){ 
 	return crystalSeparation[seg];
+  }
+  else
+  	return 0;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+inline const G4VPhysicalVolume* Clover::GetCrystal(int seg)
+{
+  if (seg>=0 || seg<4){ 
+    return physiCrystal[seg];
   }
   else
   	return 0;

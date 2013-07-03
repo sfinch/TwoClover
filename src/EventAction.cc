@@ -38,9 +38,12 @@ void EventAction::BeginOfEventAction(const G4Event* evt)
   }
  
   // initialisation per event
-  EnergyDep[0] = 0.;
-  EnergyDep[1] = 0.;
-  EnergyDep[2] = 0.;
+  NaIEn = 0;
+  for (int i=0; i<2; i++){
+    for (int j=0; j<4; j++){
+      EnergyDep[i][j] = 0.;
+	}
+  }
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -48,23 +51,32 @@ void EventAction::BeginOfEventAction(const G4Event* evt)
 void EventAction::EndOfEventAction(const G4Event* evt)
 {
   //accumulates statistic
-  double bin[3];
-  bin[0] = EnergyDep[0]/(keV);
-  bin[1] = EnergyDep[1]/(keV);
-  bin[2] = EnergyDep[2]/(keV);
+  double bin[2][4];
+  for (int i=0; i<2; i++){
+    for (int j=0; j<4; j++){
+      bin[i][j] = EnergyDep[i][j]/(keV);
+    }
+  }
 
-  runAct->fillPerEvent(bin);
+  runAct->fillPerEvent(bin, NaIEn);
   
   //print per event (modulo n)
   G4int evtNb = evt->GetEventID();
   if (evtNb%printModulo == 0) {
 
-    G4cout << "   Total energy deposited in crystal 1: " << std::setw(7)
-           << G4BestUnit(EnergyDep[0],"Energy") << G4endl;
-    G4cout << "   Total energy deposited in crystal 2: " << std::setw(7)
-           << G4BestUnit(EnergyDep[1],"Energy") << G4endl;
+    G4cout << "   Energy deposited in crystal 1: " << G4endl;
+    G4cout << G4BestUnit(EnergyDep[0][0],"Energy") << std::setw(5)
+           << G4BestUnit(EnergyDep[0][1],"Energy") << std::setw(5)
+           << G4BestUnit(EnergyDep[0][2],"Energy") << std::setw(5)
+           << G4BestUnit(EnergyDep[0][3],"Energy") << G4endl;
+    G4cout << "   Energy deposited in crystal 2: " << G4endl;
+    G4cout << G4BestUnit(EnergyDep[1][0],"Energy") << std::setw(5)
+           << G4BestUnit(EnergyDep[1][1],"Energy") << std::setw(5)
+           << G4BestUnit(EnergyDep[1][2],"Energy") << std::setw(5)
+           << G4BestUnit(EnergyDep[1][3],"Energy") << G4endl;
+
     G4cout << "   Total energy deposited in NaI: " << std::setw(7)
-           << G4BestUnit(EnergyDep[2],"Energy") << G4endl;
+           << G4BestUnit(NaIEn,"Energy") << G4endl;
 	  
     G4cout << "---> End of event: " << evtNb << G4endl;	
   }

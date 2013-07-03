@@ -21,14 +21,16 @@ public:
   void  BeginOfEventAction(const G4Event*);
   void    EndOfEventAction(const G4Event*);
     
-  void AddEn(G4int det, G4double de) {EnergyDep[det] += de;};
-                     
+  void AddEn(G4int det, G4int seg, G4double de) {EnergyDep[det][seg] += de;};
+  void AddVEn(G4double de)                      {NaIEn += de;};
+
   void SetPrintModulo(G4int val)  {printModulo = val;};
     
 private:
    RunAction*  runAct;
    
-   G4double  EnergyDep[3];
+   G4double  EnergyDep[2][4];
+   G4double  NaIEn;
                      
    G4int     printModulo;
                              

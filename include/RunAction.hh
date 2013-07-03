@@ -26,17 +26,25 @@ public:
   void BeginOfRunAction(const G4Run*);
   void   EndOfRunAction(const G4Run*);
     
-  void fillPerEvent(double[]); 
+  void fillPerEvent(double[][4], double); 
   void SetFileName(G4String val) {fileName = val;}
   G4String GetFileName()		{return fileName;}
 
 private:
-  double enDep[3];
-  TH1F *hEn[2];
-  TH1F *hEnV[2];
+  double enDep[2][4];
+  double enAdd[2];
+  double enSing[2];
+  int    hits[2];
+  double NaIEn;
+  TH1F *hEn[2][4];
+  TH1F *hEnV[2][4];
+  TH1F *hAdd[2];
+  TH1F *hAddV[2];
+  TH1F *hSing[2];
+  TH1F *hSingV[2];
+  TH1F *hHits[2];
+  TH1F *hHitsV[2];
   TH1F *hNaI;
-  TH2F *h2D;
-  TH2F *h2DV;
   TTree *tMC;
   TFile *fMC;
 

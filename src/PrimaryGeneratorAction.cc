@@ -20,7 +20,7 @@
 PrimaryGeneratorAction::PrimaryGeneratorAction(DetectorConstruction* DC)
 :Detector(DC),rndmFlag("off")
 {
-  numGamma = 2;
+  numGamma = 1;
   positionR = 0*cm;
   energy[0] = 369.9*keV;
   energy[1] = 778.2*keV;
