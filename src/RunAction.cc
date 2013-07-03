@@ -12,6 +12,10 @@
 #include "TFile.h"
 #include "TTree.h"
 
+#include <iostream>
+
+using namespace std;
+
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 RunAction::RunAction()
@@ -94,8 +98,8 @@ void RunAction::fillPerEvent(double E[][4], double NaIE)
       }
 	}
 	if (hits[i]==1){
-	  hSing[i] = hAdd[i];
-	  hAdd[i] = 0;
+	  enSing[i] = enAdd[i];
+	  enAdd[i] = 0;
 	}
   }
 
