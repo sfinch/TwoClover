@@ -35,10 +35,11 @@ class CloverMessenger: public G4UImessenger
 	//Crystal Dimensions
     G4UIcmdWithADoubleAndUnit* CrystalHalfLengthCmd[4];
     G4UIcmdWithADoubleAndUnit* CrystalRadCmd[4];
-    G4UIcmdWithADoubleAndUnit* CrystalEndRadCmd[4];
+    G4UIcmdWithADoubleAndUnit* CrystalInOffsetCmd[4];
+    G4UIcmdWithADoubleAndUnit* CrystalOutOffsetCmd[4];
+    G4UIcmdWithADoubleAndUnit* CrystalSeparationCmd[4];
     G4UIcmdWithADoubleAndUnit* HoleRadCmd[4];
     G4UIcmdWithADoubleAndUnit* HoleDepthCmd[4];
-    G4UIcmdWithADoubleAndUnit* DeadLayerCmd[4];
 	//Shell dimensions
     G4UIcmdWithADoubleAndUnit* ShellHalfLengthCmd;
     G4UIcmdWithADoubleAndUnit* EndGapCmd;
