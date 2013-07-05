@@ -52,13 +52,14 @@ void EventAction::EndOfEventAction(const G4Event* evt)
 {
   //accumulates statistic
   double bin[2][4];
+  double NaIbin = NaIEn/(keV);
   for (int i=0; i<2; i++){
     for (int j=0; j<4; j++){
       bin[i][j] = EnergyDep[i][j]/(keV);
     }
   }
 
-  runAct->fillPerEvent(bin, NaIEn);
+  runAct->fillPerEvent(bin, NaIbin);
   
   //print per event (modulo n)
   G4int evtNb = evt->GetEventID();

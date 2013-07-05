@@ -22,8 +22,8 @@ PrimaryGeneratorAction::PrimaryGeneratorAction(DetectorConstruction* DC)
 {
   numGamma = 1;
   positionR = 0*cm;
-  energy[0] = 369.9*keV;
-  energy[1] = 778.2*keV;
+  energy[0] = 1*MeV;
+  energy[1] = 1*MeV;
   energy[2] = 1*MeV;
   energy[3] = 1*MeV;
 
