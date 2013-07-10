@@ -9,6 +9,7 @@
 #include "G4ThreeVector.hh"
 
 class G4ParticleGun;
+class G4GeneralParticleSource;
 class G4Event;
 class DetectorConstruction;
 class PrimaryGeneratorMessenger;
@@ -39,6 +40,8 @@ private:
   G4int          numGamma;
   G4double       positionR;
   G4double       energy[4];
+
+  G4GeneralParticleSource* particleSource;
 
 };
 

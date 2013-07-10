@@ -118,8 +118,9 @@ G4VPhysicalVolume* DetectorConstruction::ConstructTwoClover(){
   DetRot[0]->rotateX(180*deg);
   DetRot[1] = new G4RotationMatrix();
 
-  CloverDet[0]->BuildClover(logicWorld, DetPos[0], DetRot[0]);
   CloverDet[1]->BuildClover(logicWorld, DetPos[1], DetRot[1]);
+  /*
+  CloverDet[0]->BuildClover(logicWorld, DetPos[0], DetRot[0]);
 
   // NaI Annulus
   G4ThreeVector *NaIPos = new G4ThreeVector(0,0,0);
@@ -132,6 +133,7 @@ G4VPhysicalVolume* DetectorConstruction::ConstructTwoClover(){
   G4RotationMatrix *sampRot = new G4RotationMatrix();
 
   DySamp->BuildDySample(logicWorld, sampPos, sampRot);
+  */
 
   PrintTwoCloverParameters();     
   

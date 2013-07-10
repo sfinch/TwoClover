@@ -8,6 +8,6 @@
 /gps/position 0 0 0 cm
 
 # Set isotropic distribution
-#/gps/ang/mintheta 3.14159 rad
+#/gps/ang/mintheta 1 rad
 #/gps/ang/rot1 0 1 0
 /gps/ang/type iso

@@ -14,12 +14,18 @@
 #include "G4ThreeVector.hh"
 #include "G4RotationMatrix.hh"
 #include "TF1.h"
+#include "G4GeneralParticleSource.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 PrimaryGeneratorAction::PrimaryGeneratorAction(DetectorConstruction* DC)
 :Detector(DC),rndmFlag("off")
 {
+
+  //create a messenger for this class
+  gunMessenger = new PrimaryGeneratorMessenger(this);
+
+  // Particle gun
   numGamma = 1;
   positionR = 0*cm;
   energy[0] = 1*MeV;
@@ -29,9 +35,6 @@ PrimaryGeneratorAction::PrimaryGeneratorAction(DetectorConstruction* DC)
 
   particleGun  = new G4ParticleGun(1);
   
-  //create a messenger for this class
-  gunMessenger = new PrimaryGeneratorMessenger(this);
-
   // default particle kinematic
   G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
   G4ParticleDefinition* particle = particleTable->FindParticle("gamma");
@@ -40,14 +43,16 @@ PrimaryGeneratorAction::PrimaryGeneratorAction(DetectorConstruction* DC)
   particleGun->SetParticleEnergy(energy[0]);
   particleGun->SetParticlePosition(G4ThreeVector(0*cm,positionR,0.*cm));
 
+  // Particle source
+  particleSource = new G4GeneralParticleSource();
+
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-PrimaryGeneratorAction::~PrimaryGeneratorAction()
-{
-  delete particleGun;
+PrimaryGeneratorAction::~PrimaryGeneratorAction() { delete particleGun;
   delete gunMessenger;
+  delete particleSource;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -55,54 +60,41 @@ PrimaryGeneratorAction::~PrimaryGeneratorAction()
 void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
   //this function is called at the begining of event
-  G4ThreeVector p = randP();
-  particleGun->SetParticleMomentumDirection(p);
-  particleGun->SetParticleEnergy(energy[0]);
-  particleGun->SetParticlePosition(G4ThreeVector(0*cm,positionR,0.*cm));
-  
-  if (numGamma==1){
-  	particleGun->GeneratePrimaryVertex(anEvent);
+
+  if (rndmFlag == "off"){
+    G4ThreeVector p[5];
+    p[0] = randP();
+    //p[0] = G4ThreeVector(1,0,0);	// straight gamma
+    particleGun->SetParticlePosition(G4ThreeVector(0*cm,positionR,0.*cm));
+    //particleGun->SetParticlePosition(G4ThreeVector(0*cm,2.5*cm,-2.5*cm)); // change position
+
+    if (numGamma==1){
+
+    }
+    else if (numGamma==2){
+      p[1] = randE2(p[0]);
+    }
+    else if (numGamma==3){
+      p[1] = randP();
+      p[2] = randP();
+    }
+    else if (numGamma==4){
+      p[1] = randP();
+      p[2] = randP();
+      p[3] = randP();
+    }
+
+    for (int i=0; i<numGamma; i++){
+      particleGun->SetParticleMomentumDirection(p[i]);
+      particleGun->SetParticleEnergy(energy[i]);
+      particleGun->GeneratePrimaryVertex(anEvent);
+    }
   }
 
-  else if (numGamma==2){
-    particleGun->GeneratePrimaryVertex(anEvent);
-
-    G4ThreeVector p2 = randE2(p);
-    particleGun->SetParticleMomentumDirection(p2);
-    particleGun->SetParticleEnergy(energy[1]);
-    particleGun->GeneratePrimaryVertex(anEvent);
+  if (rndmFlag == "on"){
+    particleSource->GeneratePrimaryVertex(anEvent);
   }
-  else if (numGamma==3){
-    particleGun->GeneratePrimaryVertex(anEvent);
 
-    p = randP();
-    particleGun->SetParticleMomentumDirection(p);
-    particleGun->SetParticleEnergy(energy[1]);
-    particleGun->GeneratePrimaryVertex(anEvent);
-
-    p = randP();
-    particleGun->SetParticleMomentumDirection(p);
-    particleGun->SetParticleEnergy(energy[2]);
-    particleGun->GeneratePrimaryVertex(anEvent);
-  }
-  else if (numGamma==4){
-    particleGun->GeneratePrimaryVertex(anEvent);
-
-    p = randP();
-    particleGun->SetParticleMomentumDirection(p);
-    particleGun->SetParticleEnergy(energy[1]);
-    particleGun->GeneratePrimaryVertex(anEvent);
-
-    p = randP();
-    particleGun->SetParticleMomentumDirection(p);
-    particleGun->SetParticleEnergy(energy[2]);
-    particleGun->GeneratePrimaryVertex(anEvent);
-
-    p = randP();
-    particleGun->SetParticleMomentumDirection(p);
-    particleGun->SetParticleEnergy(energy[3]);
-    particleGun->GeneratePrimaryVertex(anEvent);
-  }
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

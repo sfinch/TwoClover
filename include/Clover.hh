@@ -41,6 +41,7 @@ class Clover
      void SetHoleDepth(int, G4double);
 
      void SetShellHalfLength(G4double);
+     void SetShellWidth(G4double);
      void SetEndGap(G4double);
      void SetWindowThickness(G4double);
      void SetWallThickness(G4double);
@@ -63,6 +64,7 @@ class Clover
      G4double GetHoleDepthRad(int seg);
       
      G4double GetShellHalfLength()		{return shellHalfLength;}; 
+     G4double GetShellWidth()			{return shellWidth;}; 
      G4double GetEndGap()				{return endGap;};
      G4double GetWindowThickness()		{return windowThickness;};
      G4double GetWallThickness()		{return wallThickness;};
@@ -73,7 +75,7 @@ class Clover
      
      const G4VPhysicalVolume* GetCrystal(int seg);
 
-	 G4VSolid* roundedBox(G4double, G4double, G4double);
+	 G4VSolid* roundedBox(G4String, G4double, G4double, G4double);
                  
   private:
 
@@ -96,6 +98,7 @@ class Clover
      G4double           holeDepth[4];
 
      G4double           shellHalfLength;
+     G4double           shellWidth;
      G4double           endGap;
      G4double           windowThickness;
      G4double           wallThickness;

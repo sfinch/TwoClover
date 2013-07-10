@@ -52,6 +52,7 @@ Clover::Clover(G4String giveName)
   }
   // default parameter values of the clover 
   shellHalfLength = (105./2)*mm;
+  shellWidth = 105.*mm;
   endGap = 3.5*mm;
   windowThickness = 2.54*mm;
   wallThickness = 1.5*mm;
@@ -143,7 +144,7 @@ void Clover::BuildClover(G4LogicalVolume *logWorld,
   // complete the clover parameters definition
   ComputeCloverParameters();
    
-  // Crystal
+  // Crystal 
   G4VSolid *cyl1[4];
   G4VSolid *cylbox[4];
   G4VSolid *cyl2[4];
@@ -184,7 +185,7 @@ void Clover::BuildClover(G4LogicalVolume *logWorld,
   			crystalMaterial,	//material
 			"logCrystal");
 
-	physiCrystal[i] = new G4PVPlacement(rm[i],	//rotation
+    physiCrystal[i] = new G4PVPlacement(rm[i],	//rotation
 					CryPlacement[i],
 					logCrystal[i],	//its logical volume
 					"physiCrystal",	//its name
@@ -194,16 +195,15 @@ void Clover::BuildClover(G4LogicalVolume *logWorld,
   }
  
   //Make the outer shell
-  G4VSolid *shell1 = roundedBox(8*cm, 2*shellHalfLength, 1.5*cm);
-  G4VSolid *shell2 = roundedBox(6*cm, 2*shellHalfLength, 1.5*cm);
-  //G4VSolid *outerShell = new G4SubtractionSolid("outerShell", shell1, shell2, 0, G4ThreeVector(0,0,0));
-  G4VSolid *asdf = new G4Box("asdf", 3*cm, 3*cm, 2*shellHalfLength);	//size
-  G4VSolid *outerShell = new G4SubtractionSolid("outerShell", shell1, asdf, 0, G4ThreeVector(0,0,0));
+  //G4VSolid *shell1 = roundedBox("shell1", shellWidth, shellHalfLength, 1.5*cm);
+  //G4VSolid *shell2 = roundedBox("shell2", shellWidth-2*wallThickness, 1.1*shellHalfLength, 1.5*cm);
+  G4VSolid *shell1 = new G4Box("shell1", shellWidth/2., shellWidth/2., shellHalfLength);
+  G4VSolid *shell2 = new G4Box("shell2", shellWidth/2. - wallThickness, shellWidth/2. - wallThickness, 
+                               1.1*shellHalfLength);
+  G4VSolid *outerShell = new G4SubtractionSolid("outerShell", shell1, shell2, 0, G4ThreeVector(0,0,0));
   logShell = new G4LogicalVolume(outerShell,
-  //logShell = new G4LogicalVolume(shell1,
   			wallMaterial,	//material
 			"logShell");
-  /*
   physiShell = new G4PVPlacement(rm[0],	//rotation
 					G4ThreeVector(multx*(shellHalfLength+DetPos->x()),multy*DetPos->y(),multz*DetPos->z()),	//placement
 					logShell,	//its logical volume
@@ -211,11 +211,12 @@ void Clover::BuildClover(G4LogicalVolume *logWorld,
 					logicWorld,	//its mother  volume
 					false,		//no boolean operation
 					0);		//copy number
-					*/
 
 
   //Make the window
-  G4VSolid *window = roundedBox(8*cm, windowThickness, 1.5*cm);
+  //G4VSolid *window = roundedBox("window",shellWidth, windowThickness, 1.5*cm);
+  G4VSolid *window = new G4Box("window", shellWidth/2. - wallThickness, 
+                               shellWidth/2. - wallThickness, windowThickness/2.);
   logWindow = new G4LogicalVolume(window,
   			windowMaterial,	//material
 			"logWindow");
@@ -286,7 +287,7 @@ void Clover::PrintCloverParameters(){
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-G4VSolid* Clover::roundedBox(G4double height, G4double width, G4double curv){
+G4VSolid* Clover::roundedBox(G4String name, G4double height, G4double width, G4double curv){
 	G4ThreeVector corner[4];
   	G4RotationMatrix *rm[4]; 
 	G4double x = height*0.5 - curv;
@@ -322,7 +323,8 @@ G4VSolid* Clover::roundedBox(G4double height, G4double width, G4double curv){
 		  rounded[i] = new G4UnionSolid("rounded"+i, rounded[i-1], edge[i], rm[i], corner[i]);
 		}
 	}
-	
+	rounded[3]->SetName(name);
+
 	return rounded[3];
 }
 
@@ -416,6 +418,12 @@ void Clover::SetCrystalSeparation(int seg, G4double val){
 
 void Clover::SetShellHalfLength(G4double val){
    shellHalfLength = val;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void Clover::SetShellWidth(G4double val){
+   shellWidth = val;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
