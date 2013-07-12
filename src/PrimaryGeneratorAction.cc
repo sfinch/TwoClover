@@ -19,7 +19,8 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 PrimaryGeneratorAction::PrimaryGeneratorAction(DetectorConstruction* DC)
-:Detector(DC),rndmFlag("off")
+//:Detector(DC),rndmFlag("off")
+:Detector(DC),rndmFlag("on")
 {
 
   //create a messenger for this class
@@ -124,8 +125,10 @@ G4ThreeVector PrimaryGeneratorAction::randE2(G4ThreeVector P){
 
   G4double theta = P.getTheta();
   G4double phi = P.getPhi();
+  TF1 *fPDF;
 
-  TF1 *fPDF = new TF1("fPDF","1.250-3.75*cos(x)**2+5.00*cos(x)**4",0.,3.14159);
+  fPDF = new TF1("fPDF","1.-3.*cos(x)**2+4.*cos(x)**4",0.,3.14159);  //0+ -> 2+ -> 0+
+  //fPDF = new TF1("fPDF","1.-(1./8.)*cos(x)**2+(1./24.)*cos(x)**4",0.,3.14159);  //4+ -> 2+ -> 0+
 
   double theta2 = fPDF->GetRandom();
   double phi2 = 2*3.14159*G4UniformRand();

@@ -6,6 +6,7 @@
 
 #include "G4Material.hh"
 #include "G4NistManager.hh"
+#include "G4UImanager.hh"
 
 #include "G4Box.hh"
 #include "G4Tubs.hh"
@@ -47,12 +48,12 @@ Clover::Clover(G4String giveName)
 	crystalOutOffset[i] = (23)*mm;
 	crystalSeparation[i] = (0.3)*mm;
 
-	holeRad[i] = (9./2)*mm;
+	holeRad[i] = (10./2)*mm;
 	holeDepth[i] = (35.5)*mm;
   }
   // default parameter values of the clover 
   shellHalfLength = (105./2)*mm;
-  shellWidth = 105.*mm;
+  shellWidth = 101.*mm;
   endGap = 3.5*mm;
   windowThickness = 2.54*mm;
   wallThickness = 1.5*mm;
@@ -229,24 +230,42 @@ void Clover::BuildClover(G4LogicalVolume *logWorld,
 					0);		//copy number
   			
   PrintCloverParameters();
+
+  // Set solid angle
+  G4double detectorDistance = sqrt(DetPos->x()*DetPos->x() + DetPos->y()*DetPos->y() 
+      + DetPos->z()*DetPos->z());
+  theta = pi - acos(detectorDistance*1./
+  sqrt(shellWidth*shellWidth/4 + detectorDistance*detectorDistance));
   
- // Visualization attributes
- // crysal
- for (int i=0; i<4;i++){
+  G4UImanager* UI = G4UImanager::GetUIpointer();
+  std::stringstream strbld;
+  
+  strbld << "/gps/ang/mintheta " << theta << " rad";
+  UI->ApplyCommand(strbld.str());
+  strbld.str("");
+  strbld.clear();
+  
+  strbld << "/gps/ang/rot1 0 0 -1";
+  UI->ApplyCommand(strbld.str());
+  
+  
+  // Visualization attributes
+  // crysal
+  for (int i=0; i<4;i++){
  	{G4VisAttributes* atb= new G4VisAttributes(G4Colour(0.0,1.0,0.0,0.7));
 	 atb->SetForceSolid(true);
 	 logCrystal[i]->SetVisAttributes(atb);}
-  }
+   }
   
- // window
- {G4VisAttributes* atb= new G4VisAttributes(G4Colour(1.0,0.0,0.0,0.5));
-  atb->SetForceSolid(true);
-  logWindow->SetVisAttributes(atb);}
+  // window
+  {G4VisAttributes* atb= new G4VisAttributes(G4Colour(1.0,0.0,0.0,0.5));
+   atb->SetForceSolid(true);
+   logWindow->SetVisAttributes(atb);}
 
- // shell
- {G4VisAttributes* atb= new G4VisAttributes(G4Colour(0.0,0.0,1.0,0.1));
-  atb->SetForceSolid(true);
-  logShell->SetVisAttributes(atb);}
+  // shell
+  {G4VisAttributes* atb= new G4VisAttributes(G4Colour(0.0,0.0,1.0,0.1));
+   atb->SetForceSolid(true);
+   logShell->SetVisAttributes(atb);}
 
 }
 
@@ -254,34 +273,41 @@ void Clover::BuildClover(G4LogicalVolume *logWorld,
 
 void Clover::PrintCloverParameters(){
 	
-  /*
-  G4double activeVol = activeCrystal->GetCubicVolume();
-  G4double activeSA = activeCrystal->GetSurfaceArea();
-  G4double holeVol = hole->GetCubicVolume();
-  G4double holeSA = hole->GetSurfaceArea();
-  */
+  G4double activeVol[4], activeSA[4], holeVol[4], holeSA[4];
+
+  for (int i=0; i<4; i++){
+    activeVol[i] = activeCrystal[i]->GetCubicVolume();
+    activeSA[i] = activeCrystal[i]->GetSurfaceArea();
+    holeVol[i] = hole[i]->GetCubicVolume();
+    holeSA[i] = hole[i]->GetSurfaceArea();
+  }
+  G4double solidangle = 2*pi*(1-cos(pi-theta));
 
   G4cout << "\n------------------------------------------------------------"
          << "\n--->  " << name << "  <---\n"
-         << "\n---> The crysyal is " << crystalMaterial->GetName() << "\n"
-		 /*
-         << crystalRad/mm << "mm outer radius \n"
-         << 2.*crystalHalfLength/mm << "mm length \n" 
-         << holeRad/mm << "mm hole radius \n" 
-         << holeDepth/mm << "mm hole depth \n" 
-		 */
-		 << "---> Shielding properties \n"
+         << "\n---> The crysyal is " << crystalMaterial->GetName() << "\n";
+		 for (int i=0; i<4; i++){
+		   G4cout << "--- Crystal " << i+1 << "---\n"
+           << crystalRad[i]/mm << "mm outer radius \n"
+           << 2.*crystalHalfLength[i]/mm << "mm length \n" 
+           << holeRad[i]/mm << "mm hole radius \n" 
+           << holeDepth[i]/mm << "mm hole depth \n";
+		 }
+		 G4cout << "---> Shielding properties \n"
          << 2.*shellHalfLength/mm << "mm shell length \n" 
          << wallThickness/mm << "mm wall of " << wallMaterial->GetName() << "\n" 
          << endGap/mm << "mm end gap \n" 
          << windowThickness/mm << "mm window of " << windowMaterial->GetName() << "\n"
-		 << "--->Calculated quantities \n"
-		 /*
-		 << holeVol/(cm*cm*cm) << " cm^3 hole volume \n"
-		 << holeSA/(cm*cm) << " cm^2 hole surface area \n"
-		 << activeVol/(cm*cm*cm) << " cm^3 Active volume \n"
-		 << activeSA/(cm*cm) << " cm^2 Active surface area \n"
-		 */
+		 << "--->Calculated quantities \n";
+		 for (int i=0; i<4; i++){
+		   G4cout << "--- Crystal " << i+1 << "---\n"
+		   << holeVol[i]/(cm*cm*cm) << " cm^3 hole volume \n"
+		   << holeSA[i]/(cm*cm) << " cm^2 hole surface area \n"
+		   << activeVol[i]/(cm*cm*cm) << " cm^3 Active volume \n"
+		   << activeSA[i]/(cm*cm) << " cm^2 Active surface area \n";
+		 }
+		 G4cout << theta << " theta \n"
+		 << solidangle << " /4*pi solid angle\n"
          << "\n------------------------------------------------------------\n";
 }
 

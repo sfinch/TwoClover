@@ -27,7 +27,7 @@ DetectorConstruction::DetectorConstruction()
 :defaultMaterial(0),
  solidWorld(0),logicWorld(0),physiWorld(0)
 {
-  detectorDistance = 1.*cm;
+  detectorDistance = 25.*cm;
 
   // materials
   DefineMaterials();

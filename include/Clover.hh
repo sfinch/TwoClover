@@ -102,6 +102,8 @@ class Clover
      G4double           endGap;
      G4double           windowThickness;
      G4double           wallThickness;
+
+	 G4double 			theta;
      
      G4Material*        defaultMaterial;
             

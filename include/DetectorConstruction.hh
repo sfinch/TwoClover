@@ -82,6 +82,10 @@ inline void DetectorConstruction::ComputeTwoCloverParameters()
 {
   G4double maxRad = NaIDet->GetCrystalOutRad() + NaIDet->GetWallOutThickness();
   G4double maxLength = NaIDet->GetCrystalHalfLength();
+  G4double maxLength2 = detectorDistance + 2*CloverDet[1]->GetShellHalfLength();
+  if (maxLength2 > maxLength){
+    maxLength = maxLength2;
+  }
 
   WorldSizeX  = 2.2*maxLength;
   WorldSizeYZ = 2.2*maxRad;

@@ -4,3 +4,4 @@ version 1: started from TwoCoax code:  https://github.com/sfinch/TwoCoax
 version 2: Updated geometry, fixed output to root files, and updated plot 7/5/13
 version 3: Updated primary generator action, changed to rectangular detector shell
            Can't get rectangular prism with rounded edges to work... 7/10/13
+Version 4: Fixes to GPS geometry 7/12/13
