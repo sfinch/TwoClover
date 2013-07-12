@@ -17,6 +17,15 @@
 RunAction::RunAction()
 :fileName("simulated")
 {
+  cutoff[0][0] = 110;
+  cutoff[0][1] = 98;
+  cutoff[0][2] = 89;
+  cutoff[0][3] = 98;
+  cutoff[1][0] = 90;
+  cutoff[1][1] = 87;
+  cutoff[1][2] = 88;
+  cutoff[1][3] = 90;
+
 	runMessenger = new RunActionMessenger(this);
 }
 
@@ -85,7 +94,7 @@ void RunAction::fillPerEvent(double E[][4], double NaIE)
   for (int i=0; i<2; i++){
     for (int j=0; j<4; j++){
 	  enDep[i][j] = E[i][j];
-	  if (enDep[i][j]>50){
+	  if (enDep[i][j]>cutoff[i][j]){
 	  	enAdd[i]+=enDep[i][j];
 		hits[i]++;
 	  }

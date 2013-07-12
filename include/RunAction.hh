@@ -31,6 +31,7 @@ public:
   G4String GetFileName()		{return fileName;}
 
 private:
+  double cutoff[2][4];
   double enDep[2][4];
   double enAdd[2];
   double enSing[2];
