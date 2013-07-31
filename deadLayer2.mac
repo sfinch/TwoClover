@@ -12,6 +12,8 @@
 #name file
 /TwoClover/run/fileName dead{deadLayer}hole{holeDepth}
 
+#set energy
+/gps/energy 661.657 keV
 #turn off visulizer
 /vis/disable
 #only print ever 10000 events

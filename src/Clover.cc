@@ -318,7 +318,7 @@ void Clover::BuildClover(G4LogicalVolume *logWorld,
 void Clover::PrintCloverParameters(){
 	
   G4double activeVol[4], activeSA[4], holeVol[4], holeSA[4]; 
-  G4doube  deadLayerVol[4], deadLayerSA[4];
+  G4double  deadLayerVol[4], deadLayerSA[4];
 
   for (int i=0; i<4; i++){
     activeVol[i] = activeCrystal[i]->GetCubicVolume();
@@ -338,7 +338,7 @@ void Clover::PrintCloverParameters(){
            << crystalRad[i]/mm << "mm outer radius \n"
            << 2.*crystalHalfLength[i]/mm << "mm length \n" 
            << holeRad[i]/mm << "mm hole radius \n" 
-           << holeDepth[i]/mm << "mm hole depth \n";
+           << holeDepth[i]/mm << "mm hole depth \n"
            << deadLayerThick[i]/mm << "mm thickness of dead layer\n";
 		 }
 		 G4cout << "---> Shielding properties \n"
@@ -352,7 +352,7 @@ void Clover::PrintCloverParameters(){
 		   << holeVol[i]/(cm*cm*cm) << " cm^3 hole volume \n"
 		   << holeSA[i]/(cm*cm) << " cm^2 hole surface area \n"
 		   << activeVol[i]/(cm*cm*cm) << " cm^3 Active volume \n"
-		   << activeSA[i]/(cm*cm) << " cm^2 Active surface area \n";
+		   << activeSA[i]/(cm*cm) << " cm^2 Active surface area \n"
 		   << deadLayerVol[i]/(cm*cm*cm) << " cm^3 dead layer volume \n"
 		   << deadLayerSA[i]/(cm*cm) << " cm^2 dead layer surface area \n";
 		 }
