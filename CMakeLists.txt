@@ -36,7 +36,10 @@ target_link_libraries(TwoClover ${ROOT_LIBRARIES} )
 # build N03. This is so that we can run the executable directly because it
 # relies on these scripts being in the current working directory.
 set(TwoClover_SCRIPTS
-    rndmSeed.mac run1.mac vis.mac gun.mac
+    rndmSeed.mac run1.mac vis.mac gun.mac 
+	holeDepth.mac
+	hole_dead.mac deadLayer.mac deadLayer2.mac
+	hole_dead2.mac
 	plot.C 
   )
 

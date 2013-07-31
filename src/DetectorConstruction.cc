@@ -28,6 +28,7 @@ DetectorConstruction::DetectorConstruction()
  solidWorld(0),logicWorld(0),physiWorld(0)
 {
   detectorDistance = 25.*cm;
+  //detectorDistance = 0.5*cm;
 
   // materials
   DefineMaterials();

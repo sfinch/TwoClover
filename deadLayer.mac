@@ -1,0 +1,10 @@
+# Macro File
+
+#set the hole depth
+/TwoClover/det/Clover2/setHole1Depth {holeDepth} mm
+/TwoClover/det/Clover2/setHole2Depth {holeDepth} mm
+/TwoClover/det/Clover2/setHole3Depth {holeDepth} mm
+/TwoClover/det/Clover2/setHole4Depth {holeDepth} mm
+
+#loop over dead layer thickness
+/control/loop deadLayer2.mac deadLayer 500 1500 100

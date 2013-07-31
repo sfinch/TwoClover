@@ -1,0 +1,4 @@
+# Macro File
+
+#loop
+/control/loop deadLayer.mac holeDepth 50 60 2

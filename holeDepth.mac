@@ -1,0 +1,67 @@
+# Macro File
+
+#turn off visulizer
+/vis/disable
+#only print ever 10000 events
+/TwoClover/event/printModulo 10000
+#set energy
+/gps/energy 661.657 keV
+#set file name and hole dim
+
+#/TwoClover/run/fileName eff35
+#/TwoClover/det/Clover2/setHole1Depth 35 mm
+#/TwoClover/det/Clover2/setHole2Depth 36 mm
+#/TwoClover/det/Clover2/setHole3Depth 37 mm
+#/TwoClover/det/Clover2/setHole4Depth 38 mm
+
+#/TwoClover/run/fileName eff39
+#/TwoClover/det/Clover2/setHole1Depth 39 mm
+#/TwoClover/det/Clover2/setHole2Depth 40 mm
+#/TwoClover/det/Clover2/setHole3Depth 41 mm
+#/TwoClover/det/Clover2/setHole4Depth 42 mm
+
+#/TwoClover/run/fileName eff43
+#/TwoClover/det/Clover2/setHole1Depth 43 mm
+#/TwoClover/det/Clover2/setHole2Depth 44 mm
+#/TwoClover/det/Clover2/setHole3Depth 45 mm
+#/TwoClover/det/Clover2/setHole4Depth 46 mm
+
+#/TwoClover/run/fileName eff47
+#/TwoClover/det/Clover2/setHole1Depth 47 mm
+#/TwoClover/det/Clover2/setHole2Depth 48 mm
+#/TwoClover/det/Clover2/setHole3Depth 49 mm
+#/TwoClover/det/Clover2/setHole4Depth 50 mm
+
+#/TwoClover/run/fileName eff51
+#/TwoClover/det/Clover2/setHole1Depth 51 mm
+#/TwoClover/det/Clover2/setHole2Depth 52 mm
+#/TwoClover/det/Clover2/setHole3Depth 53 mm
+#/TwoClover/det/Clover2/setHole4Depth 54 mm
+
+/TwoClover/run/fileName eff55
+/TwoClover/det/Clover2/setHole1Depth 55 mm
+/TwoClover/det/Clover2/setHole2Depth 56 mm
+/TwoClover/det/Clover2/setHole3Depth 57 mm
+/TwoClover/det/Clover2/setHole4Depth 58 mm
+
+#/TwoClover/run/fileName eff59
+#/TwoClover/det/Clover2/setHole1Depth 59 mm
+#/TwoClover/det/Clover2/setHole2Depth 60 mm
+#/TwoClover/det/Clover2/setHole3Depth 61 mm
+#/TwoClover/det/Clover2/setHole4Depth 62 mm
+
+#/TwoClover/run/fileName eff63
+#/TwoClover/det/Clover2/setHole1Depth 63 mm
+#/TwoClover/det/Clover2/setHole2Depth 64 mm
+#/TwoClover/det/Clover2/setHole3Depth 65 mm
+#/TwoClover/det/Clover2/setHole4Depth 66 mm
+
+#/TwoClover/run/fileName eff67
+#/TwoClover/det/Clover2/setHole1Depth 67 mm
+#/TwoClover/det/Clover2/setHole2Depth 68 mm
+#/TwoClover/det/Clover2/setHole3Depth 69 mm
+#/TwoClover/det/Clover2/setHole4Depth 70 mm
+
+/TwoClover/det/update
+#run 1000000 events
+/run/beamOn 10000000 

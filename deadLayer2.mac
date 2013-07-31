@@ -1,0 +1,20 @@
+# Macro File
+
+#set dead layer thickness
+/TwoClover/det/Clover2/setDeadLayer1Thick {deadLayer} um
+/TwoClover/det/Clover2/setDeadLayer2Thick {deadLayer} um
+/TwoClover/det/Clover2/setDeadLayer3Thick {deadLayer} um
+/TwoClover/det/Clover2/setDeadLayer4Thick {deadLayer} um
+
+#update geometry
+/TwoClover/det/update
+
+#name file
+/TwoClover/run/fileName dead{deadLayer}hole{holeDepth}
+
+#turn off visulizer
+/vis/disable
+#only print ever 10000 events
+/TwoClover/event/printModulo 10000
+#run 1000000 events
+/run/beamOn 1250000 

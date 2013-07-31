@@ -48,16 +48,18 @@ Clover::Clover(G4String giveName)
 	crystalOutOffset[i] = (23)*mm;
 	crystalSeparation[i] = (0.3)*mm;
 
-	holeRad[i] = (10./2)*mm;
-	holeDepth[i] = (35.5)*mm;
+	holeRad[i] = (7.5/2)*mm;
+	holeDepth[i] = (60.0)*mm;
+
+	deadLayerThick[i] = (1.0)*mm;
   }
+
   // default parameter values of the clover 
   shellHalfLength = (105./2)*mm;
   shellWidth = 101.*mm;
   endGap = 3.5*mm;
   windowThickness = 2.54*mm;
   wallThickness = 1.5*mm;
-  
 
   ComputeCloverParameters();
   
@@ -67,7 +69,6 @@ Clover::Clover(G4String giveName)
   SetWallMaterial("Al");
 
   cloverMessenger = new CloverMessenger(this);
-  //BuildClover();
   
 }
 
@@ -104,6 +105,7 @@ void Clover::BuildClover(G4LogicalVolume *logWorld,
   }
 
   G4ThreeVector CryPlacement[4];
+  G4ThreeVector deadPlacement[4];
   G4RotationMatrix *rm[4];
   for (int i=0; i<4; i++){
   	rm[i] = new G4RotationMatrix(); 
@@ -141,6 +143,12 @@ void Clover::BuildClover(G4LogicalVolume *logWorld,
    						multy*DetPos->y() - crystalInOffset[3] - crystalSeparation[3],
 						multz*DetPos->z() + crystalInOffset[3] + crystalSeparation[3]);
   }
+  for (int i=0; i<4; i++){
+    deadPlacement[i] = G4ThreeVector(CryPlacement[i].x()+multx*(crystalHalfLength[i]-0.5*holeDepth[i]+0.5*holeRad[i]), 
+		CryPlacement[i].y(), 
+		CryPlacement[i].z());
+  }
+
 
   // complete the clover parameters definition
   ComputeCloverParameters();
@@ -151,6 +159,10 @@ void Clover::BuildClover(G4LogicalVolume *logWorld,
   G4VSolid *cyl2[4];
   G4VSolid *inCyl[4];
   G4VSolid *inSph[4];
+  G4VSolid *dead1[4];
+  G4VSolid *dead2[4];
+  G4VSolid *dead3[4];
+
   for (int i=0; i<4; i++){
 	G4double width  = crystalInOffset[i]+crystalOutOffset[i];
 	G4double offset = (crystalOutOffset[i]-crystalInOffset[i])*0.5;
@@ -177,22 +189,48 @@ void Clover::BuildClover(G4LogicalVolume *logWorld,
 	inSph[i] = new G4Orb("inSph",holeRad[i]);
 	hole[i] = new G4UnionSolid("hole",
   			inCyl[i],inSph[i],0,G4ThreeVector(0.,0.,.5*(holeDepth[i]-holeRad[i])));
+
+	//make the dead layer
+	dead1[i] = new G4Tubs("dead1", //name
+			0.*cm, 			//inner radius
+			holeRad[i]+deadLayerThick[i],  //outer radius
+			0.5*(holeDepth[i]-holeRad[i]), //z half length
+			0.*deg,			//starting phi
+			360.*deg);		//ending phi
+	dead2[i] = new G4Orb("dead2",holeRad[i]+deadLayerThick[i]);
+	dead3[i]= new G4UnionSolid("dead3",
+  			dead1[i],dead2[i],0,G4ThreeVector(0.,0.,.5*(holeDepth[i]-holeRad[i])));
+	deadLayer[i] = new G4SubtractionSolid("deadLayer",
+  			dead3[i],hole[i],0,G4ThreeVector(0.,0.,0.));
+	
+	//dead layer
+	logDeadLayer[i] = new G4LogicalVolume(deadLayer[i],
+			crystalMaterial,	//material
+			"logDeadLayer");
+
+    physiDeadLayer[i] = new G4PVPlacement(rm[i],	//rotation
+			deadPlacement[i],
+			logDeadLayer[i],	//its logical volume
+			"physiDeadLayer",	//its name
+			logicWorld,	//its mother  volume
+			false,		//no boolean operation
+			0);		//copy number
   
 	//final detector shape
 	activeCrystal[i] = new G4SubtractionSolid("solidCrystal",
-  			cyl2[i],hole[i],0,G4ThreeVector(0.,0.,-crystalHalfLength[i]+0.5*holeDepth[i]-0.5*holeRad[i]));
+  			cyl2[i],dead3[i],0,G4ThreeVector(0.,0.,-crystalHalfLength[i]+0.5*holeDepth[i]-0.5*holeRad[i]));
 
 	logCrystal[i] = new G4LogicalVolume(activeCrystal[i],
   			crystalMaterial,	//material
 			"logCrystal");
 
     physiCrystal[i] = new G4PVPlacement(rm[i],	//rotation
-					CryPlacement[i],
-					logCrystal[i],	//its logical volume
-					"physiCrystal",	//its name
-					logicWorld,	//its mother  volume
-					false,		//no boolean operation
-					0);		//copy number
+			CryPlacement[i],
+			logCrystal[i],	//its logical volume
+			"physiCrystal",	//its name
+			logicWorld,	//its mother  volume
+			false,		//no boolean operation
+			0);		//copy number
   }
  
   //Make the outer shell
@@ -255,15 +293,21 @@ void Clover::BuildClover(G4LogicalVolume *logWorld,
  	{G4VisAttributes* atb= new G4VisAttributes(G4Colour(0.0,1.0,0.0,0.7));
 	 atb->SetForceSolid(true);
 	 logCrystal[i]->SetVisAttributes(atb);}
+
+ 	{G4VisAttributes* atb= new G4VisAttributes(G4Colour(1.0,0.0,0.0,1.));
+	 atb->SetForceSolid(true);
+	 logDeadLayer[i]->SetVisAttributes(atb);}
    }
   
   // window
-  {G4VisAttributes* atb= new G4VisAttributes(G4Colour(1.0,0.0,0.0,0.5));
+  //{G4VisAttributes* atb= new G4VisAttributes(G4Colour(1.0,0.0,0.0,0.5));
+  {G4VisAttributes* atb= new G4VisAttributes(G4Colour(1.0,0.0,0.0,0.0));
    atb->SetForceSolid(true);
    logWindow->SetVisAttributes(atb);}
 
   // shell
-  {G4VisAttributes* atb= new G4VisAttributes(G4Colour(0.0,0.0,1.0,0.1));
+  //{G4VisAttributes* atb= new G4VisAttributes(G4Colour(0.0,0.0,1.0,0.1));
+  {G4VisAttributes* atb= new G4VisAttributes(G4Colour(0.0,0.0,1.0,0.0));
    atb->SetForceSolid(true);
    logShell->SetVisAttributes(atb);}
 
@@ -273,13 +317,16 @@ void Clover::BuildClover(G4LogicalVolume *logWorld,
 
 void Clover::PrintCloverParameters(){
 	
-  G4double activeVol[4], activeSA[4], holeVol[4], holeSA[4];
+  G4double activeVol[4], activeSA[4], holeVol[4], holeSA[4]; 
+  G4doube  deadLayerVol[4], deadLayerSA[4];
 
   for (int i=0; i<4; i++){
     activeVol[i] = activeCrystal[i]->GetCubicVolume();
     activeSA[i] = activeCrystal[i]->GetSurfaceArea();
     holeVol[i] = hole[i]->GetCubicVolume();
     holeSA[i] = hole[i]->GetSurfaceArea();
+    deadLayerVol[i] = deadLayer[i]->GetCubicVolume();
+    deadLayerSA[i]  = deadLayer[i]->GetSurfaceArea();
   }
   G4double solidangle = 2*pi*(1-cos(pi-theta));
 
@@ -292,6 +339,7 @@ void Clover::PrintCloverParameters(){
            << 2.*crystalHalfLength[i]/mm << "mm length \n" 
            << holeRad[i]/mm << "mm hole radius \n" 
            << holeDepth[i]/mm << "mm hole depth \n";
+           << deadLayerThick[i]/mm << "mm thickness of dead layer\n";
 		 }
 		 G4cout << "---> Shielding properties \n"
          << 2.*shellHalfLength/mm << "mm shell length \n" 
@@ -305,6 +353,8 @@ void Clover::PrintCloverParameters(){
 		   << holeSA[i]/(cm*cm) << " cm^2 hole surface area \n"
 		   << activeVol[i]/(cm*cm*cm) << " cm^3 Active volume \n"
 		   << activeSA[i]/(cm*cm) << " cm^2 Active surface area \n";
+		   << deadLayerVol[i]/(cm*cm*cm) << " cm^3 dead layer volume \n"
+		   << deadLayerSA[i]/(cm*cm) << " cm^2 dead layer surface area \n";
 		 }
 		 G4cout << theta << " theta \n"
 		 << solidangle << " /4*pi solid angle\n"
@@ -429,6 +479,14 @@ void Clover::SetHoleRad(int seg, G4double val){
 void Clover::SetHoleDepth(int seg, G4double val){
   if (seg>=0 || seg<4){ 
 	holeDepth[seg] = val;
+  }
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void Clover::SetDeadLayerThick(int seg, G4double val){
+  if (seg>=0 || seg<4){ 
+	deadLayerThick[seg] = val;
   }
 }
 

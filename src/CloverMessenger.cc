@@ -97,6 +97,14 @@ CloverMessenger::CloverMessenger(Clover* Det)
 	HoleDepthCmd[i]->SetUnitCategory("Length");    
 	HoleDepthCmd[i]->AvailableForStates(G4State_PreInit,G4State_Idle);
 	  
+	crap = dir+"setDeadLayer"+seg+"Thick";
+	DeadLayerCmd[i]= new G4UIcmdWithADoubleAndUnit(crap.c_str(),this);
+	DeadLayerCmd[i]->SetGuidance("Set the thickness of the dead layer.");
+	DeadLayerCmd[i]->SetParameterName("Size",false);
+	DeadLayerCmd[i]->SetRange("Size>0.");
+	DeadLayerCmd[i]->SetUnitCategory("Length");    
+	DeadLayerCmd[i]->AvailableForStates(G4State_PreInit,G4State_Idle);
+
 	crap = dir+"setCrystal"+seg+"Separation";
 	CrystalSeparationCmd[i]= new G4UIcmdWithADoubleAndUnit(crap.c_str(),this);
 	CrystalSeparationCmd[i]->SetGuidance("Set the crystal's  separation.");
@@ -152,6 +160,7 @@ CloverMessenger::~CloverMessenger()
   	delete CrystalHalfLengthCmd[i]; delete CrystalRadCmd[i]; 
 	delete CrystalInOffsetCmd[i]; delete CrystalOutOffsetCmd[i];
   	delete HoleRadCmd[i]; delete HoleDepthCmd[i];
+	delete DeadLayerCmd[i];
   	delete CrystalSeparationCmd[i];
   }
 
@@ -194,6 +203,9 @@ void CloverMessenger::SetNewValue(G4UIcommand* command,G4String newValue)
    
  	 if( command == HoleDepthCmd[i])
 	   { Detector->SetHoleDepth(i, HoleDepthCmd[i]->GetNewDoubleValue(newValue));}
+   
+ 	 if( command == DeadLayerCmd[i])
+	   { Detector->SetDeadLayerThick(i, DeadLayerCmd[i]->GetNewDoubleValue(newValue));}
    
  	 if( command == CrystalSeparationCmd[i])
  	   { Detector->SetCrystalSeparation(i, CrystalSeparationCmd[i]->GetNewDoubleValue(newValue));}
