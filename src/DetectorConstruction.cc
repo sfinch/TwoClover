@@ -27,7 +27,7 @@ DetectorConstruction::DetectorConstruction()
 :defaultMaterial(0),
  solidWorld(0),logicWorld(0),physiWorld(0)
 {
-  detectorDistance = 25.*cm;
+  detectorDistance = .16*cm;
   //detectorDistance = 0.5*cm;
 
   // materials
@@ -120,8 +120,8 @@ G4VPhysicalVolume* DetectorConstruction::ConstructTwoClover(){
   DetRot[1] = new G4RotationMatrix();
 
   CloverDet[1]->BuildClover(logicWorld, DetPos[1], DetRot[1]);
-  /*
   CloverDet[0]->BuildClover(logicWorld, DetPos[0], DetRot[0]);
+  /*
 
   // NaI Annulus
   G4ThreeVector *NaIPos = new G4ThreeVector(0,0,0);

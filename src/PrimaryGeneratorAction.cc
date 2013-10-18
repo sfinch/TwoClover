@@ -86,8 +86,8 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 
     }
     else if (numGamma==2){
-      //p[1] = randE2(p[0]);
-      p[1] = randE1(p[0]);
+      p[1] = randE2(p[0]);
+      //p[1] = randE1(p[0]);
     }
     else if (numGamma==3){
       p[1] = randP();
