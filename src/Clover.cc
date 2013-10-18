@@ -300,14 +300,14 @@ void Clover::BuildClover(G4LogicalVolume *logWorld,
    }
   
   // window
-  //{G4VisAttributes* atb= new G4VisAttributes(G4Colour(1.0,0.0,0.0,0.5));
-  {G4VisAttributes* atb= new G4VisAttributes(G4Colour(1.0,0.0,0.0,0.0));
+  {G4VisAttributes* atb= new G4VisAttributes(G4Colour(1.0,0.0,0.0,0.5));
+  //{G4VisAttributes* atb= new G4VisAttributes(G4Colour(1.0,0.0,0.0,0.0));
    atb->SetForceSolid(true);
    logWindow->SetVisAttributes(atb);}
 
   // shell
-  //{G4VisAttributes* atb= new G4VisAttributes(G4Colour(0.0,0.0,1.0,0.1));
-  {G4VisAttributes* atb= new G4VisAttributes(G4Colour(0.0,0.0,1.0,0.0));
+  {G4VisAttributes* atb= new G4VisAttributes(G4Colour(0.0,0.0,1.0,0.1));
+  //{G4VisAttributes* atb= new G4VisAttributes(G4Colour(0.0,0.0,1.0,0.0));
    atb->SetForceSolid(true);
    logShell->SetVisAttributes(atb);}
 

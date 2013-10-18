@@ -17,14 +17,14 @@
 RunAction::RunAction()
 :fileName("simulated")
 {
-  cutoff[0][0] = 110;
-  cutoff[0][1] = 98;
-  cutoff[0][2] = 89;
-  cutoff[0][3] = 98;
-  cutoff[1][0] = 90;
-  cutoff[1][1] = 87;
-  cutoff[1][2] = 88;
-  cutoff[1][3] = 90;
+  cutoff[0][0] = 30;
+  cutoff[0][1] = 30;
+  cutoff[0][2] = 30;
+  cutoff[0][3] = 30;
+  cutoff[1][0] = 30;
+  cutoff[1][1] = 30;
+  cutoff[1][2] = 30;
+  cutoff[1][3] = 30;
 
 	runMessenger = new RunActionMessenger(this);
 }
@@ -69,8 +69,8 @@ void RunAction::BeginOfRunAction(const G4Run* aRun)
   	hAddV[i] = new TH1F(Form("hAddV%i",det),Form("hAddV%i",det),6000,0,3000);
   	hSing[i] = new TH1F(Form("hSing%i",det),Form("hAdd%i",det),6000,0,3000);
   	hSingV[i] = new TH1F(Form("hSingV%i",det),Form("hAddV%i",det),6000,0,3000);
-  	hHits[i] = new TH1F(Form("hHits%i",det),Form("hHits%i",det),5,0,4);
-  	hHitsV[i] = new TH1F(Form("hHitsV%i",det),Form("hHitsV%i",det),5,0,4);
+  	hHits[i] = new TH1F(Form("hHits%i",det),Form("hHits%i",det),5,0,5);
+  	hHitsV[i] = new TH1F(Form("hHitsV%i",det),Form("hHitsV%i",det),5,0,5);
   	for (int j=0; j<4; j++){
       int seg = j+1;
   	  hEn[i][j] = new TH1F(Form("hEn%i%i",det,seg),Form("hEn%i%i",det,seg),6000,0,3000);
@@ -109,7 +109,8 @@ void RunAction::fillPerEvent(double E[][4], double NaIE)
   }
 
   //accumulate statistic
-  if (maxE>200){	// trigger
+  //if (maxE>200){	// trigger
+  if (maxE>40){	// trigger
   	hNaI->Fill(NaIEn);
   	for (int i=0; i<2; i++){
 	  hAdd[i]->Fill(enAdd[i]);

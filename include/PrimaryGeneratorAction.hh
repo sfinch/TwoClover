@@ -8,6 +8,8 @@
 #include "globals.hh"
 #include "G4ThreeVector.hh"
 
+#include "TF1.h"
+
 class G4ParticleGun;
 class G4GeneralParticleSource;
 class G4Event;
@@ -29,6 +31,7 @@ public:
   void SetEnergy(int num, G4double En);
   G4ThreeVector randP();
   G4ThreeVector randE2(G4ThreeVector);
+  G4ThreeVector randE1(G4ThreeVector);
 
 private:
   G4ParticleGun*           particleGun;	 //pointer a to G4  class
@@ -40,6 +43,10 @@ private:
   G4int          numGamma;
   G4double       positionR;
   G4double       energy[4];
+
+  TF1 *fPDF020;
+  TF1 *fPDF420;
+  TF1 *fPDF010;
 
   G4GeneralParticleSource* particleSource;
 

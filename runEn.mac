@@ -1,0 +1,8 @@
+# Macro File
+
+#set energy
+/gps/energy {en} keV
+#set file name 
+/TwoClover/run/fileName effEn{en}kev
+#run 1000000 events
+/run/beamOn 1000000 

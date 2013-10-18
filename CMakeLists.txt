@@ -40,6 +40,7 @@ set(TwoClover_SCRIPTS
 	holeDepth.mac
 	hole_dead.mac deadLayer.mac deadLayer2.mac
 	hole_dead2.mac
+	multiRun.mac multiRun2.mac runEn.mac
 	plot.C 
   )
 

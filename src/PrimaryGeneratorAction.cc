@@ -27,12 +27,25 @@ PrimaryGeneratorAction::PrimaryGeneratorAction(DetectorConstruction* DC)
   gunMessenger = new PrimaryGeneratorMessenger(this);
 
   // Particle gun
-  numGamma = 1;
+  numGamma = 2;
   positionR = 0*cm;
-  energy[0] = 1*MeV;
-  energy[1] = 1*MeV;
+  // 102Ru
+  energy[0] = 468.58*keV;
+  energy[1] = 475.06*keV;
+  // 96Zr
+  //energy[0] = 369.8*keV;
+  //energy[1] = 778.23*keV;
+  // 150Nd 
+  //energy[0] = 406.51*keV;
+  //energy[1] = 333.96*keV;
+
   energy[2] = 1*MeV;
   energy[3] = 1*MeV;
+
+  fPDF020 = new TF1("fPDF020","1.-3.*cos(x)**2+4.*cos(x)**4",0.,3.14159);  //0+ -> 2+ -> 0+
+  fPDF420 = new TF1("fPDF420","1.-(1./8.)*cos(x)**2+(1./24.)*cos(x)**4",0.,3.14159);  //4+ -> 2+ -> 0+
+  fPDF010 = new TF1("fPDF010","1.+cos(x)**2",0.,3.14159);  //4+ -> 2+ -> 0+
+
 
   particleGun  = new G4ParticleGun(1);
   
@@ -73,7 +86,8 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 
     }
     else if (numGamma==2){
-      p[1] = randE2(p[0]);
+      //p[1] = randE2(p[0]);
+      p[1] = randE1(p[0]);
     }
     else if (numGamma==3){
       p[1] = randP();
@@ -125,12 +139,8 @@ G4ThreeVector PrimaryGeneratorAction::randE2(G4ThreeVector P){
 
   G4double theta = P.getTheta();
   G4double phi = P.getPhi();
-  TF1 *fPDF;
 
-  fPDF = new TF1("fPDF","1.-3.*cos(x)**2+4.*cos(x)**4",0.,3.14159);  //0+ -> 2+ -> 0+
-  //fPDF = new TF1("fPDF","1.-(1./8.)*cos(x)**2+(1./24.)*cos(x)**4",0.,3.14159);  //4+ -> 2+ -> 0+
-
-  double theta2 = fPDF->GetRandom();
+  double theta2 = fPDF020->GetRandom();
   double phi2 = 2*3.14159*G4UniformRand();
 
   G4RotationMatrix *rot = new G4RotationMatrix();
@@ -144,11 +154,37 @@ G4ThreeVector PrimaryGeneratorAction::randE2(G4ThreeVector P){
 
   e2.transform(*rot);
   delete rot;
-  delete fPDF;
 
   //G4cout << "Theta should be " << std::cos(theta2) << ": " << e2.dot(P) << G4endl;
 
   return e2;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+G4ThreeVector PrimaryGeneratorAction::randE1(G4ThreeVector P){
+
+  G4double theta = P.getTheta();
+  G4double phi = P.getPhi();
+
+  double theta2 = fPDF010->GetRandom();
+  double phi2 = 2*3.14159*G4UniformRand();
+
+  G4RotationMatrix *rot = new G4RotationMatrix();
+  rot->rotateY(theta);
+  rot->rotateZ(phi);
+
+  G4ThreeVector e1 (1,0,0);
+  e1.setTheta(theta2);
+  e1.setPhi(phi2);
+  e1.setMag(1.);
+
+  e1.transform(*rot);
+  delete rot;
+
+  //G4cout << "Theta should be " << std::cos(theta2) << ": " << e1.dot(P) << G4endl;
+
+  return e1;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
