@@ -1,4 +1,7 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//
+// src/RunActionMessenger.hh
+//
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #include "RunActionMessenger.hh"
@@ -13,9 +16,11 @@
 RunActionMessenger::RunActionMessenger(RunAction* RunAct)
 :runAction(RunAct)
 {
+  // directory
   runDir = new G4UIdirectory("/TwoClover/run/");
   runDir->SetGuidance("run control");
    
+  // command to change the file name
   fileNameCmd= new G4UIcmdWithAString("/TwoClover/run/fileName",this);
   fileNameCmd->SetGuidance("Give a filename to save to.");
   fileNameCmd->SetParameterName("choice",true);
@@ -34,12 +39,10 @@ RunActionMessenger::~RunActionMessenger()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void RunActionMessenger::SetNewValue(
-                                        G4UIcommand* command,G4String newValue)
+void RunActionMessenger::SetNewValue(G4UIcommand* command,G4String newValue)
 { 
-
   if(command == fileNameCmd){
-	runAction->SetFileName(newValue);
+    runAction->SetFileName(newValue);
   }
 }
 

@@ -1,4 +1,7 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//
+// include/PrimaryGeneratorMessenger.hh
+//
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #ifndef PrimaryGeneratorMessenger_h

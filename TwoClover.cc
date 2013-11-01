@@ -1,4 +1,9 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//
+// TwoClover.cc
+// Geant4 monecarlo simulation of the two clover apparatus.  Includes both clover
+// detectors, NaI annulus, and 156Dy sources.
+//
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #include "G4RunManager.hh"
@@ -12,7 +17,6 @@
 #include "RunAction.hh"
 #include "EventAction.hh"
 #include "SteppingAction.hh"
-#include "SteppingVerbose.hh"
 
 #ifdef G4VIS_USE
 #include "G4VisExecutive.hh"
@@ -29,16 +33,13 @@ int main(int argc,char** argv)
   // Choose the Random engine
   CLHEP::HepRandom::setTheEngine(new CLHEP::RanecuEngine);
   
-  // User Verbose output class
-  G4VSteppingVerbose::SetInstance(new SteppingVerbose);
-     
   // Construct the default run manager
   G4RunManager * runManager = new G4RunManager;
 
   // Set mandatory initialization classes
   DetectorConstruction* detector = new DetectorConstruction;
   runManager->SetUserInitialization(detector);
-  //
+  
   PhysicsList* physics = new PhysicsList;
   runManager->SetUserInitialization(physics);
     
@@ -46,13 +47,13 @@ int main(int argc,char** argv)
   PrimaryGeneratorAction* gen_action = 
                           new PrimaryGeneratorAction(detector);
   runManager->SetUserAction(gen_action);
-  //
+  
   RunAction* run_action = new RunAction;  
   runManager->SetUserAction(run_action);
-  //
+  
   EventAction* event_action = new EventAction(run_action);
   runManager->SetUserAction(event_action);
-  //
+  
   SteppingAction* stepping_action =
                     new SteppingAction(detector, event_action);
   runManager->SetUserAction(stepping_action);

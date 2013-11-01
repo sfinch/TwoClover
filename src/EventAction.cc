@@ -1,4 +1,7 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//
+// src/EventAction.cc
+//
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #include "EventAction.hh"
@@ -42,7 +45,7 @@ void EventAction::BeginOfEventAction(const G4Event* evt)
   for (int i=0; i<2; i++){
     for (int j=0; j<4; j++){
       EnergyDep[i][j] = 0.;
-	}
+    }
   }
 }
 
@@ -78,8 +81,8 @@ void EventAction::EndOfEventAction(const G4Event* evt)
 
     G4cout << "   Total energy deposited in NaI: " << std::setw(7)
            << G4BestUnit(NaIEn,"Energy") << G4endl;
-	  
-    G4cout << "---> End of event: " << evtNb << G4endl;	
+      
+    G4cout << "---> End of event: " << evtNb << G4endl; 
   }
 }  
 

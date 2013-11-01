@@ -6,3 +6,4 @@ version 3: Updated primary generator action, changed to rectangular detector she
            Can't get rectangular prism with rounded edges to work... 7/10/13
 Version 4: Fixes to GPS geometry 7/12/13
 Version 5: Added dead layer 7/31/13
+Version 5: better commented and fixed spacing in code 11/30/2013

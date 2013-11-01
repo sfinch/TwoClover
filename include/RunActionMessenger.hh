@@ -1,4 +1,7 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//
+// include/RunActionMessenger.hh
+//
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #ifndef RunActionMessenger_h
@@ -15,16 +18,16 @@ class G4UIcmdWithAString;
 
 class RunActionMessenger: public G4UImessenger
 {
-public:
-  RunActionMessenger(RunAction*);
-  virtual ~RunActionMessenger();
+  public:
+    RunActionMessenger(RunAction*);
+    virtual ~RunActionMessenger();
     
-  void SetNewValue(G4UIcommand*, G4String);
+    void SetNewValue(G4UIcommand*, G4String);
     
-private:
-  RunAction*          runAction;
-  G4UIdirectory*        runDir;   
-  G4UIcmdWithAString*	fileNameCmd;
+  private:
+    RunAction*          runAction;
+    G4UIdirectory*        runDir;   
+    G4UIcmdWithAString*   fileNameCmd;
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

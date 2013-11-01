@@ -1,0 +1,12 @@
+# Macro File
+# use wuth runEn.mac
+# for use with one clover
+
+#turn off visulizer
+/vis/disable
+#only print ever 10000 events
+/TwoClover/event/printModulo 10000
+
+#loop over dead layer thickness
+/control/loop runEn.mac en 75 275 50
+

@@ -1,4 +1,8 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//
+// include/DySample.hh
+// makes the enriched 156Dy sample
+//
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #ifndef DySample_h
@@ -19,31 +23,35 @@ class G4Material;
 class DySample 
 {
   public:
-  
+
     DySample(G4String name);
-   ~DySample();
+    ~DySample();
 
   public:
 
-   	 void SetName(G4String);
+     // setters
+     void SetName(G4String);
      
+     // functions
      void BuildDySample(G4LogicalVolume *logWorld,
-					 G4ThreeVector *pos,
-					 G4RotationMatrix *rot);
+                     G4ThreeVector *pos,
+                     G4RotationMatrix *rot);
      void PrintDySampleParameters();
      
   public:
   
-     G4String GetName()					{return name;};
+     // getters
+     G4String GetName()                 {return name;};
       
      const G4VPhysicalVolume* GetSample()   {return physSample;};
 
   private:
 
-     G4String	 	    name;
+     // object properties
+     G4String           name;
      G4LogicalVolume*   logicWorld;
-   	 G4ThreeVector		SamplePos;
-   	 G4RotationMatrix*	SampleRot;
+     G4ThreeVector      SamplePos;
+     G4RotationMatrix*  SampleRot;
      
      G4Material*        sampleMaterial;
      G4Material*        defaultMaterial;
@@ -52,9 +60,9 @@ class DySample
      G4double           sampleWidth;
      G4double           sampleHeight;
 
-	 G4VSolid *sample;					//Inner Dy disk
-     G4LogicalVolume *logSample;		//pointer to the logical inner disk Dy
-     G4VPhysicalVolume *physSample;		//pointer to the physical inner disk Dy 
+     G4VSolid *sample;                  //Inner Dy disk
+     G4LogicalVolume *logSample;        //pointer to the logical inner disk Dy
+     G4VPhysicalVolume *physSample;     //pointer to the physical inner disk Dy 
 
   private:
     
@@ -66,7 +74,7 @@ class DySample
 
 inline void DySample::ComputeDySampleParameters()
 {
-	
+    
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

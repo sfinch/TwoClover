@@ -1,4 +1,9 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//
+// include/DetectorMessenger.hh
+// makes all aspects of the detector: HPGes, NaI, samples, etc
+// uses Clover.hh, NaIAnnulus.hh, and DySample.hh classes
+//
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #ifndef DetectorMessenger_h
@@ -20,7 +25,7 @@ class DetectorMessenger: public G4UImessenger
 {
   public:
     DetectorMessenger(DetectorConstruction* );
-   ~DetectorMessenger();
+    ~DetectorMessenger();
     
     void SetNewValue(G4UIcommand*, G4String);
     
@@ -29,9 +34,9 @@ class DetectorMessenger: public G4UImessenger
     
     G4UIdirectory*             TwoCloverDir;
     G4UIdirectory*             detDir;
-	//materials
+    //materials
     G4UIcmdWithADoubleAndUnit* DetectorDistanceCmd;
-	//update
+    //update
     G4UIcmdWithoutParameter*   UpdateCmd;
 };
 

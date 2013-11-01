@@ -1,4 +1,7 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//
+// src/EventActionMessenger.cc
+//
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #include "EventActionMessenger.hh"
@@ -13,9 +16,11 @@
 EventActionMessenger::EventActionMessenger(EventAction* EvAct)
 :eventAction(EvAct)
 {
+  // directory
   eventDir = new G4UIdirectory("/TwoClover/event/");
   eventDir->SetGuidance("event control");
    
+  // set the print modulo
   PrintCmd = new G4UIcmdWithAnInteger("/TwoClover/event/printModulo",this);
   PrintCmd->SetGuidance("Print events modulo n");
   PrintCmd->SetParameterName("EventNb",false);
@@ -33,13 +38,11 @@ EventActionMessenger::~EventActionMessenger()
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-void EventActionMessenger::SetNewValue(
-                                        G4UIcommand* command,G4String newValue)
+void EventActionMessenger::SetNewValue(G4UIcommand* command, G4String newValue)
 { 
   if(command == PrintCmd){
     eventAction->SetPrintModulo(PrintCmd->GetNewIntValue(newValue));
   }
-
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

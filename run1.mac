@@ -1,4 +1,6 @@
 # Macro File
+# runs 1 Million events with the current settings
+# designed for 2 clover coincidence mode
 
 #turn off visulizer
 /vis/disable

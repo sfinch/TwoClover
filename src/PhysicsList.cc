@@ -1,4 +1,7 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//
+// src/PhysicsList.hh
+//
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #include "PhysicsList.hh"
@@ -23,7 +26,9 @@ PhysicsList::PhysicsList():  G4VUserPhysicsList()
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 PhysicsList::~PhysicsList()
-{}
+{
+
+}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -99,29 +104,29 @@ void PhysicsList::ConstructEM()
       pmanager->AddDiscreteProcess(new G4PhotoElectricEffect);
       pmanager->AddDiscreteProcess(new G4ComptonScattering);
       pmanager->AddDiscreteProcess(new G4GammaConversion);
-      
-    } else if (particleName == "e-") {
+    }  
+    else if (particleName == "e-") {
       //electron
       pmanager->AddProcess(new G4eMultipleScattering,-1, 1, 1);
       pmanager->AddProcess(new G4eIonisation,        -1, 2, 2);
       pmanager->AddProcess(new G4eBremsstrahlung,    -1, 3, 3);      
-
-    } else if (particleName == "e+") {
+    }
+    else if (particleName == "e+") {
       //positron
       pmanager->AddProcess(new G4eMultipleScattering,-1, 1, 1);
       pmanager->AddProcess(new G4eIonisation,        -1, 2, 2);
       pmanager->AddProcess(new G4eBremsstrahlung,    -1, 3, 3);
       pmanager->AddProcess(new G4eplusAnnihilation,   0,-1, 4);
-    
-    } else if( particleName == "mu+" || 
+    }
+    else if( particleName == "mu+" || 
                particleName == "mu-"    ) {
       //muon  
       pmanager->AddProcess(new G4MuMultipleScattering,-1, 1, 1);
       pmanager->AddProcess(new G4MuIonisation,       -1, 2, 2);
       pmanager->AddProcess(new G4MuBremsstrahlung,   -1, 3, 3);
       pmanager->AddProcess(new G4MuPairProduction,   -1, 4, 4);
-             
-    } else if( particleName == "proton" ||
+    }        
+    else if( particleName == "proton" ||
                particleName == "pi-" ||
                particleName == "pi+"    ) {
       //proton  
@@ -129,21 +134,21 @@ void PhysicsList::ConstructEM()
       pmanager->AddProcess(new G4hIonisation,         -1, 2, 2);
       pmanager->AddProcess(new G4hBremsstrahlung,     -1, 3, 3);
       pmanager->AddProcess(new G4hPairProduction,     -1, 4, 4);       
-     
-    } else if( particleName == "alpha" || 
-	       particleName == "He3" )     {
+    } 
+    else if( particleName == "alpha" || 
+           particleName == "He3" )     {
       //alpha 
       pmanager->AddProcess(new G4hMultipleScattering, -1, 1, 1);
       pmanager->AddProcess(new G4ionIonisation,       -1, 2, 2);
-     
-    } else if( particleName == "GenericIon" ) { 
+    }
+    else if( particleName == "GenericIon" ) { 
       //Ions 
       pmanager->AddProcess(new G4hMultipleScattering, -1, 1, 1);
       pmanager->AddProcess(new G4ionIonisation,       -1, 2, 2);     
-      
-      } else if ((!particle->IsShortLived()) &&
-	       (particle->GetPDGCharge() != 0.0) && 
-	       (particle->GetParticleName() != "chargedgeantino")) {
+    }
+    else if ((!particle->IsShortLived()) &&
+           (particle->GetPDGCharge() != 0.0) && 
+           (particle->GetParticleName() != "chargedgeantino")) {
       //all others charged particles except geantino
       pmanager->AddProcess(new G4hMultipleScattering,-1, 1, 1);
       pmanager->AddProcess(new G4hIonisation,        -1, 2, 2);        

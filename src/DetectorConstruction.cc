@@ -1,3 +1,8 @@
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//
+// src/DetectorConstruction.cc
+//
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #include "DetectorConstruction.hh"
 #include "DetectorMessenger.hh"
@@ -51,11 +56,11 @@ DetectorConstruction::DetectorConstruction()
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 DetectorConstruction::~DetectorConstruction(){ 
-	delete detectorMessenger;
-	delete CloverDet[0];
-	delete CloverDet[1];
-	delete NaIDet;
-	delete DySamp;
+  delete detectorMessenger;
+  delete CloverDet[0];
+  delete CloverDet[1];
+  delete NaIDet;
+  delete DySamp;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -68,16 +73,16 @@ G4VPhysicalVolume* DetectorConstruction::Construct(){
 
 void DetectorConstruction::DefineMaterials(){ 
  
-	G4double a, z, density;      //z=mean number of protons;  
-					             //a=mass of a mole;
+  G4double a, z, density;      //z=mean number of protons;  
+                                 //a=mass of a mole;
 
-	// examples of vacuum
-	G4Material* Vacuum =
-	new G4Material("Galactic", z=1., a=1.01*g/mole,density= universe_mean_density,
-	                           kStateGas, 2.73*kelvin, 3.e-18*pascal);
-	
-	//default materials of the World
-	defaultMaterial  = Vacuum;
+  // vacuum
+  G4Material* Vacuum =
+  new G4Material("Galactic", z=1., a=1.01*g/mole,density= universe_mean_density,
+                               kStateGas, 2.73*kelvin, 3.e-18*pascal);
+    
+  //default materials of the World
+  defaultMaterial  = Vacuum;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -94,20 +99,20 @@ G4VPhysicalVolume* DetectorConstruction::ConstructTwoClover(){
   ComputeTwoCloverParameters();
    
   // World
-  solidWorld = new G4Box("World",				//its name
-                   WorldSizeX/2,WorldSizeYZ/2,WorldSizeYZ/2);	//its size
+  solidWorld = new G4Box("World",               //its name
+                   WorldSizeX/2,WorldSizeYZ/2,WorldSizeYZ/2);   //its size
                          
-  logicWorld = new G4LogicalVolume(solidWorld,		//its solid
-                                   defaultMaterial,	//its material
-                                   "World");		//its name
+  logicWorld = new G4LogicalVolume(solidWorld,      //its solid
+                                   defaultMaterial, //its material
+                                   "World");        //its name
                                    
-  physiWorld = new G4PVPlacement(0,			//no rotation
-  				 G4ThreeVector(),	//at (0,0,0)
-                                 logicWorld,		//its logical volume				 
-                                 "World",		//its name
-                                 0,			//its mother  volume
-                                 false,			//no boolean operation
-                                 0);			//copy number
+  physiWorld = new G4PVPlacement(0,         //no rotation
+                 G4ThreeVector(),   //at (0,0,0)
+                                 logicWorld,        //its logical volume                 
+                                 "World",       //its name
+                                 0,         //its mother  volume
+                                 false,         //no boolean operation
+                                 0);            //copy number
 
   // Clover 
   G4ThreeVector *DetPos[2];
@@ -142,7 +147,7 @@ G4VPhysicalVolume* DetectorConstruction::ConstructTwoClover(){
   logicWorld->SetVisAttributes (G4VisAttributes::Invisible);
 
   //always return physical world
-  return physiWorld;	//always return the physical World
+  return physiWorld;    //always return the physical World
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

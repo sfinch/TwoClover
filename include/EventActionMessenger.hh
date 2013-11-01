@@ -1,4 +1,7 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//
+// include/EventActionMessenger.hh
+//
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #ifndef EventActionMessenger_h
@@ -15,16 +18,16 @@ class G4UIcmdWithAnInteger;
 
 class EventActionMessenger: public G4UImessenger
 {
-public:
-  EventActionMessenger(EventAction*);
-  virtual ~EventActionMessenger();
+  public:
+    EventActionMessenger(EventAction*);
+    virtual ~EventActionMessenger();
     
-  void SetNewValue(G4UIcommand*, G4String);
+    void SetNewValue(G4UIcommand*, G4String);
     
-private:
-  EventAction*          eventAction;
-  G4UIdirectory*        eventDir;   
-  G4UIcmdWithAnInteger* PrintCmd;    
+  private:
+    EventAction*          eventAction;
+    G4UIdirectory*        eventDir;   
+    G4UIcmdWithAnInteger* PrintCmd;    
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

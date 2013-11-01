@@ -1,4 +1,7 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//
+// src/DetectorMessenger.cc
+//
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #include "DetectorMessenger.hh"
@@ -12,16 +15,17 @@
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
-DetectorMessenger::DetectorMessenger(
-                                           DetectorConstruction* Det)
+DetectorMessenger::DetectorMessenger(DetectorConstruction* Det)
 :Detector(Det)
 { 
+  // directory
   TwoCloverDir = new G4UIdirectory("/TwoClover/");
   TwoCloverDir->SetGuidance("UI commands");
   
   detDir = new G4UIdirectory("/TwoClover/det/");
   detDir->SetGuidance("detector control");
        
+  // separation between teh two clovers
   DetectorDistanceCmd= new G4UIcmdWithADoubleAndUnit("/TwoClover/det/setDetectorDistance",this);
   DetectorDistanceCmd->SetGuidance("Set the distance of the detector to the source.");
   DetectorDistanceCmd->SetParameterName("Size",false);
@@ -53,12 +57,14 @@ DetectorMessenger::~DetectorMessenger()
 
 void DetectorMessenger::SetNewValue(G4UIcommand* command,G4String newValue)
 { 
-  if( command == DetectorDistanceCmd )
-   { Detector->SetDetectorDistance(DetectorDistanceCmd->GetNewDoubleValue(newValue));}
+  if (command == DetectorDistanceCmd){
+    Detector->SetDetectorDistance(DetectorDistanceCmd->GetNewDoubleValue(newValue));
+  }
 
   //update
-  if( command == UpdateCmd )
-   { Detector->UpdateGeometry(); }
+  if (command == UpdateCmd){
+    Detector->UpdateGeometry();
+  }
 
 }
 

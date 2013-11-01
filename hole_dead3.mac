@@ -1,4 +1,6 @@
 # Macro File
+# loops over hole depth and dead layer
+# uses deadLayer.mac, which uses deadLayer2.mac
 
 #loop
 /control/loop deadLayer.mac holeDepth 70 74 4

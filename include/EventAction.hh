@@ -1,4 +1,7 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//
+// include/EventAction.hh
+//
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #ifndef EventAction_h
@@ -14,29 +17,28 @@ class EventActionMessenger;
 
 class EventAction : public G4UserEventAction
 {
-public:
-  EventAction(RunAction*);
-  virtual ~EventAction();
+  public:
+    EventAction(RunAction*);
+    virtual ~EventAction();
 
-  void  BeginOfEventAction(const G4Event*);
-  void    EndOfEventAction(const G4Event*);
-    
-  void AddEn(int det, int seg, G4double de)   {EnergyDep[det][seg] += de;};
-  void AddVEn(G4double de)                    {NaIEn += de;};
-
-  void SetPrintModulo(G4int val)  {printModulo = val;};
-    
-private:
-   RunAction*  runAct;
+    void  BeginOfEventAction(const G4Event*);
+    void    EndOfEventAction(const G4Event*);
    
-   G4double  EnergyDep[2][4];
-   G4double  NaIEn;
-                     
-   G4int     printModulo;
-                             
-   EventActionMessenger*  eventMessenger;
+    void AddEn(int det, int seg, G4double de)   {EnergyDep[det][seg] += de;};
+    void AddVEn(G4double de)                    {NaIEn += de;};
 
-public:
+    void SetPrintModulo(G4int val)  {printModulo = val;};
+    
+  private:
+     RunAction*  runAct;
+   
+     G4double  EnergyDep[2][4];
+     G4double  NaIEn;
+                     
+     G4int     printModulo;
+                             
+     EventActionMessenger*  eventMessenger;
+
 };
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

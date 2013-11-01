@@ -1,4 +1,7 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//
+// include/CloverMessenger.hh
+//
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #ifndef CloverMessenger_h
@@ -20,19 +23,20 @@ class CloverMessenger: public G4UImessenger
 {
   public:
     CloverMessenger(Clover* );
-   ~CloverMessenger();
+    ~CloverMessenger();
     
     void SetNewValue(G4UIcommand*, G4String);
     
   private:
     Clover* Detector;
     
+    // directory
     G4UIdirectory*             CloverDir;
-	//materials
+    //materials
     G4UIcmdWithAString*        CrystalMaterCmd;
     G4UIcmdWithAString*        WindowMaterCmd;
     G4UIcmdWithAString*        WallMaterCmd;
-	//Crystal Dimensions
+    //Crystal Dimensions
     G4UIcmdWithADoubleAndUnit* CrystalHalfLengthCmd[4];
     G4UIcmdWithADoubleAndUnit* CrystalRadCmd[4];
     G4UIcmdWithADoubleAndUnit* CrystalInOffsetCmd[4];
@@ -41,7 +45,7 @@ class CloverMessenger: public G4UImessenger
     G4UIcmdWithADoubleAndUnit* HoleRadCmd[4];
     G4UIcmdWithADoubleAndUnit* HoleDepthCmd[4];
     G4UIcmdWithADoubleAndUnit* DeadLayerCmd[4];
-	//Shell dimensions
+    //Shell dimensions
     G4UIcmdWithADoubleAndUnit* ShellHalfLengthCmd;
     G4UIcmdWithADoubleAndUnit* EndGapCmd;
     G4UIcmdWithADoubleAndUnit* WindowThickCmd;

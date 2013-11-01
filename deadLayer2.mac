@@ -1,4 +1,6 @@
 # Macro File
+# called from deadLayer.mac
+# sets dead later and runs 1.25 Mil events
 
 #set dead layer thickness
 /TwoClover/det/Clover2/setDeadLayer1Thick {deadLayer} um

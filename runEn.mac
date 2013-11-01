@@ -1,4 +1,6 @@
 # Macro File
+# designed for one clover
+# for use with multiRunEn{1,2}.mac
 
 #set energy
 /gps/energy {en} keV

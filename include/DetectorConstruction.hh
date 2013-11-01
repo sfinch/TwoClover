@@ -1,4 +1,7 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//
+// include/DetectorConstruction.hh
+//
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #ifndef DetectorConstruction_h
@@ -28,20 +31,22 @@ class DetectorConstruction : public G4VUserDetectorConstruction
   public:
   
     DetectorConstruction();
-   ~DetectorConstruction();
+    ~DetectorConstruction();
 
   public:
      
+     // setters
      void SetDetectorDistance (G4double);     
 
+     // functions
      G4VPhysicalVolume* Construct();
-
      void UpdateGeometry();
      
   public:
   
      void PrintTwoCloverParameters(); 
                     
+     // getters
      G4double GetWorldSizeX()           {return WorldSizeX;}; 
      G4double GetWorldSizeYZ()          {return WorldSizeYZ;};
      
@@ -54,8 +59,9 @@ class DetectorConstruction : public G4VUserDetectorConstruction
                  
   private:
      
+     // object properties
      G4double           detectorDistance;
-     Clover*              CloverDet[2];
+     Clover*            CloverDet[2];
      NaIAnnulus*        NaIDet;
      DySample*          DySamp;
 
@@ -71,6 +77,7 @@ class DetectorConstruction : public G4VUserDetectorConstruction
       
   private:
     
+     // functions
      void DefineMaterials();
      void ComputeTwoCloverParameters();
      G4VPhysicalVolume* ConstructTwoClover();     

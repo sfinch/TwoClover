@@ -1,7 +1,12 @@
+// plot.C
+// Plots energy histograms for both clovers (with and vithout veto)
+// single segment, addback, singles mode, and number of hits are plotted
+
 void plot(){
 	gROOT->SetStyle("Plain");
 	gStyle->SetOptStat(0);
 	
+    // histograms
 	TH1F *hEn[2][4];
 	TH1F *hEnV[2][4];
 
@@ -13,8 +18,10 @@ void plot(){
 	TH1F *hSingV[2];
 	TH1F *hHitsV[2];
 
+    // the TFile
 	TFile *fMC = new TFile("simulated.root");
 	
+    // get histos
 	for (int i=0; i<2; i++){
 		int clover = i+1;	
 		
@@ -33,6 +40,7 @@ void plot(){
 		}
 	}
 
+    // plot individual segments
 	TCanvas *c1 = new TCanvas("c1","Simulated Data",1000,600);
 	c1->Divide(4,2);
 	int counter = 1;
@@ -56,6 +64,7 @@ void plot(){
 		}
 	}
 
+    // plot addback
 	TCanvas *cAdd = new TCanvas("cAdd","Addback Simulated Data",1000,600);
 	cAdd->Divide(1,2);
 	for (int i=0; i<2; i++){
@@ -75,6 +84,7 @@ void plot(){
 
 	}
 
+    // plot singles mode
 	TCanvas *cSing = new TCanvas("cSing","Singles Simulated Data",1000,600);
 	cSing->Divide(1,2);
 	for (int i=0; i<2; i++){
@@ -93,6 +103,7 @@ void plot(){
 		hSingV[i]->Draw("same");
 	}
 
+    // plot number of hits per clover 
 	TCanvas *cHits = new TCanvas("cHits","Hits Simulated Data",1000,600);
 	cHits->Divide(1,2);
 	for (int i=0; i<2; i++){

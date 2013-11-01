@@ -1,4 +1,11 @@
 # Macro File
+# Old verion.  Recommend using hole_dead.mac with
+# constant dead layer.  One hole depth, sum clover segs
+# removes systematic errors from random numbers favoring segments
+#
+# changes the hole depth in each clover segment
+# each segment has different hole depth
+# one run give 4 different hole depths
 
 #turn off visulizer
 /vis/disable

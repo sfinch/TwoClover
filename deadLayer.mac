@@ -1,4 +1,7 @@
 # Macro File
+# called from hole_dead{,2,3}.mac
+# calls deadLayer2.mac
+# changes the hole depth then loops over dead layer
 
 #set the hole depth
 /TwoClover/det/Clover2/setHole1Depth {holeDepth} mm

@@ -1,4 +1,7 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//
+// src/DySample.cc
+//
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #include "DySample.hh"
@@ -35,8 +38,8 @@ DySample::DySample(G4String giveName)
   name = giveName;
 
   // default parameter values of the sample
-  sampleThick	 = 1.*mm;
-  sampleWidth	 = 10.*mm;
+  sampleThick    = 1.*mm;
+  sampleWidth    = 10.*mm;
   sampleHeight   = 10.*mm;
 
   ComputeDySampleParameters();
@@ -60,14 +63,13 @@ DySample::~DySample(){
 void DySample::DefineMaterials()
 { 
  
-
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void DySample::BuildDySample(G4LogicalVolume *logWorld,
-					 G4ThreeVector *pos,
-					 G4RotationMatrix *rot){
+                     G4ThreeVector *pos,
+                     G4RotationMatrix *rot){
 
   logicWorld = logWorld;
   SampleRot = rot;
@@ -81,26 +83,26 @@ void DySample::BuildDySample(G4LogicalVolume *logWorld,
   
   // Sample 
   sample = new G4Box("sample", //name
-  			sampleThick,	// thickness
-			sampleHeight, 	// height
-			sampleWidth);	// width
+            sampleThick,    // thickness
+            sampleHeight,   // height
+            sampleWidth);   // width
   
   logSample = new G4LogicalVolume(sample,
-  			sampleMaterial,	//material
-			"logSample");
+            sampleMaterial, //material
+            "logSample");
 
-  physSample = new G4PVPlacement(rm,	//rotation
-					SamplePos,	//placement
-					logSample,	//its logical volume
-					"physSample",	//its name
-					logicWorld,	//its mother  volume
-					false,		//no boolean operation
-					0);		//copy number
+  physSample = new G4PVPlacement(rm,    //rotation
+                    SamplePos,  //placement
+                    logSample,  //its logical volume
+                    "physSample",   //its name
+                    logicWorld, //its mother  volume
+                    false,      //no boolean operation
+                    0);     //copy number
 
   PrintDySampleParameters();     
 
   // Visualization attributes
- {G4VisAttributes* atb= new G4VisAttributes(G4Colour(0.1,0.1,0.1,1));
+  {G4VisAttributes* atb= new G4VisAttributes(G4Colour(0.1,0.1,0.1,1));
   atb->SetForceSolid(true);
   logSample->SetVisAttributes(atb);}
   
@@ -110,24 +112,23 @@ void DySample::BuildDySample(G4LogicalVolume *logWorld,
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void DySample::PrintDySampleParameters(){
-	
   
   G4double SampVol = sample->GetCubicVolume();
 
   G4cout << "\n------------------------------------------------------------"
-		 << "---> Sample \n"
+         << "---> Sample \n"
          << sampleThick/mm << "mm thickness \n" 
          << sampleWidth/mm << "mm width\n" 
          << sampleHeight/mm << "mm height\n" 
-		 << "--->Calculated quantities \n"
-		 << SampVol/(cm*cm*cm) << " cm^3 sample 1 volume \n"
+         << "--->Calculated quantities \n"
+         << SampVol/(cm*cm*cm) << " cm^3 sample 1 volume \n"
          << "\n------------------------------------------------------------\n";
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 void DySample::SetName(G4String giveName){
-	name = giveName;
+    name = giveName;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

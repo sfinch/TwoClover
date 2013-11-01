@@ -9,5 +9,7 @@
 
 # Set isotropic distribution
 /gps/ang/type iso
+
+#options for setting theta (not used, set in src/HPGe.cc)
 #/gps/ang/mintheta 1.8 rad
 #/gps/ang/rot1 0 0 -1

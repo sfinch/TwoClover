@@ -1,4 +1,7 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+//
+// src/PrimaryGeneratorAction.cc
+//
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #include "PrimaryGeneratorAction.hh"
@@ -78,7 +81,7 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   if (rndmFlag == "off"){
     G4ThreeVector p[5];
     p[0] = randP();
-    //p[0] = G4ThreeVector(1,0,0);	// straight gamma
+    //p[0] = G4ThreeVector(1,0,0);  // straight gamma
     particleGun->SetParticlePosition(G4ThreeVector(0*cm,positionR,0.*cm));
     //particleGun->SetParticlePosition(G4ThreeVector(0*cm,2.5*cm,-2.5*cm)); // change position
 
@@ -120,10 +123,10 @@ G4ThreeVector PrimaryGeneratorAction::randP(){
   double P = 0.;
   double px, py, pz;
   do{
-  	px = (2*G4UniformRand())-1;
-  	py = (2*G4UniformRand())-1;
-  	pz = (2*G4UniformRand())-1;
-	P = px*px+py*py+pz*pz;
+    px = (2*G4UniformRand())-1;
+    py = (2*G4UniformRand())-1;
+    pz = (2*G4UniformRand())-1;
+    P = px*px+py*py+pz*pz;
   }while(P>1);
   P = sqrt(P);
   px = px/P;
