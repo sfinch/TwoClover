@@ -2,7 +2,7 @@
 //
 // include/DetectorMessenger.hh
 // makes all aspects of the detector: HPGes, NaI, samples, etc
-// uses Clover.hh, NaIAnnulus.hh, and DySample.hh classes
+// uses Clover.hh, NaIAnnulus.hh, and DySample[1,2].hh classes
 //
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 

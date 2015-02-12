@@ -11,7 +11,8 @@
 #include "globals.hh"
 #include "Clover.hh"
 #include "NaIAnnulus.hh"
-#include "DySample.hh"
+#include "DySample1.hh"
+#include "DySample2.hh"
 
 class G4Box;
 class G4VSolid;
@@ -22,7 +23,8 @@ class DetectorMessenger;
 
 class Clover;
 class NaIAnnulus;
-class DySample;
+class DySample1;
+class DySample2;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
@@ -53,7 +55,8 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      G4double GetDetectorDistance()     {return detectorDistance;};
      Clover* GetClover(G4int det);
      NaIAnnulus* GetNaIAnnulus()        {return NaIDet;};
-     DySample* GetDySample()            {return DySamp;};
+     DySample1* GetDySample1()          {return DySamp1;};
+     DySample2* GetDySample2()          {return DySamp2;};
 
      const G4VPhysicalVolume* GetphysiWorld() {return physiWorld;};           
                  
@@ -63,7 +66,8 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      G4double           detectorDistance;
      Clover*            CloverDet[2];
      NaIAnnulus*        NaIDet;
-     DySample*          DySamp;
+     DySample1*         DySamp1;
+     DySample2*         DySamp2;
 
      G4Material*        defaultMaterial;
      G4double           WorldSizeYZ;

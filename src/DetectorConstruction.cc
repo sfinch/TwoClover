@@ -32,8 +32,8 @@ DetectorConstruction::DetectorConstruction()
 :defaultMaterial(0),
  solidWorld(0),logicWorld(0),physiWorld(0)
 {
-  detectorDistance = .16*cm;
-  //detectorDistance = 0.5*cm;
+  //detectorDistance = .16/2*cm;
+  detectorDistance = 0.3175/2*cm;
 
   // materials
   DefineMaterials();
@@ -44,7 +44,8 @@ DetectorConstruction::DetectorConstruction()
 
   NaIDet = new NaIAnnulus("NaI");
   
-  DySamp = new DySample("Dy");
+  DySamp1 = new DySample1("Dy1");
+  DySamp2 = new DySample2("Dy2");
 
   // Calculate the world size
   ComputeTwoCloverParameters();
@@ -60,7 +61,8 @@ DetectorConstruction::~DetectorConstruction(){
   delete CloverDet[0];
   delete CloverDet[1];
   delete NaIDet;
-  delete DySamp;
+  delete DySamp1;
+  delete DySamp2;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -133,13 +135,14 @@ G4VPhysicalVolume* DetectorConstruction::ConstructTwoClover(){
   G4RotationMatrix *NaIRot = new G4RotationMatrix();
 
   NaIDet->BuildNaIAnnulus(logicWorld, NaIPos, NaIRot);
+  */
 
   //Sample
   G4ThreeVector *sampPos = new G4ThreeVector(0,0,0);
   G4RotationMatrix *sampRot = new G4RotationMatrix();
 
-  DySamp->BuildDySample(logicWorld, sampPos, sampRot);
-  */
+  //DySamp1->BuildDySample(logicWorld, sampPos, sampRot);
+  DySamp2->BuildDySample(logicWorld, sampPos, sampRot);
 
   PrintTwoCloverParameters();     
   
