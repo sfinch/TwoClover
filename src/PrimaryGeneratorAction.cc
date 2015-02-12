@@ -32,6 +32,10 @@ PrimaryGeneratorAction::PrimaryGeneratorAction(DetectorConstruction* DC)
   pi = 3.141592;
   sampleThick1 = 0;
   sampleThick2 = 0;
+  sampleWidth1 = 0;
+  sampleWidth2 = 0;
+  sampleHeight1 = 0;
+  sampleHeight2 = 0;
   sampleStart1 = 0;
   sampleStart2 = 0;
   sampNum = DC->GetSampNum();
@@ -39,12 +43,18 @@ PrimaryGeneratorAction::PrimaryGeneratorAction(DetectorConstruction* DC)
     sampleWidth1 = DC->GetDySample2()->GetSample1Width();
     sampleHeight1= DC->GetDySample2()->GetSample1Height();
     sampleThick1 = DC->GetDySample2()->GetSample1Thick();
+
     sampleWidth2 = DC->GetDySample2()->GetSample2Width();
     sampleHeight2= DC->GetDySample2()->GetSample2Height();
     sampleThick2 = DC->GetDySample2()->GetSample2Thick();
 
-    sampleStart1 = DC->GetDySample2()->GetSample1Pos().x();
-    sampleStart2 = DC->GetDySample2()->GetSample2Pos().x();
+    if (sampNum == 1){
+        sampleStart1 = DC->GetDySample1()->GetSample1Pos().x();
+    }
+    else if (sampNum == 2){
+        sampleStart1 = DC->GetDySample2()->GetSample1Pos().x();
+        sampleStart2 = DC->GetDySample2()->GetSample2Pos().x();
+    }
   }
   
   //create a messenger for this class

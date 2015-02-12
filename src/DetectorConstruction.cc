@@ -32,7 +32,7 @@ DetectorConstruction::DetectorConstruction()
 :defaultMaterial(0),
  solidWorld(0),logicWorld(0),physiWorld(0)
 {
-  sampNum = 2;
+  sampNum = 1;
   if (sampNum == 1){
     detectorDistance = .16/2*cm;
   }
