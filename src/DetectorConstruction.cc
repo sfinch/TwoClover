@@ -32,8 +32,16 @@ DetectorConstruction::DetectorConstruction()
 :defaultMaterial(0),
  solidWorld(0),logicWorld(0),physiWorld(0)
 {
-  //detectorDistance = .16/2*cm;
-  detectorDistance = 0.3175/2*cm;
+  sampNum = 2;
+  if (sampNum == 1){
+    detectorDistance = .16/2*cm;
+  }
+  else if (sampNum == 2){
+    detectorDistance = 0.3175/2*cm;
+  }
+  else{
+    detectorDistance = 0.3175/2*cm;
+  }
 
   // materials
   DefineMaterials();
@@ -141,8 +149,12 @@ G4VPhysicalVolume* DetectorConstruction::ConstructTwoClover(){
   G4ThreeVector *sampPos = new G4ThreeVector(0,0,0);
   G4RotationMatrix *sampRot = new G4RotationMatrix();
 
-  //DySamp1->BuildDySample(logicWorld, sampPos, sampRot);
-  DySamp2->BuildDySample(logicWorld, sampPos, sampRot);
+  if (sampNum == 1){
+    DySamp1->BuildDySample(logicWorld, sampPos, sampRot);
+  }
+  else if (sampNum == 2){
+    DySamp2->BuildDySample(logicWorld, sampPos, sampRot);
+  }
 
   PrintTwoCloverParameters();     
   

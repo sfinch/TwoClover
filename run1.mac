@@ -8,5 +8,7 @@
 /TwoClover/event/printModulo 10000
 #Set to manual gun (not gps)
 /TwoClover/gun/rndm off
-#run 1000000 events
-/run/beamOn 10000000
+#set file name 
+/TwoClover/run/fileName 40M
+#run 40M events
+/run/beamOn 40000000

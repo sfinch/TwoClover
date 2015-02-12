@@ -12,7 +12,9 @@
 #include "globals.hh"
 
 class PrimaryGeneratorAction;
+
 class G4UIdirectory;
+class G4UIcmdWithoutParameter;
 class G4UIcmdWithAString;
 class G4UIcmdWithAnInteger;
 class G4UIcmdWithADoubleAndUnit;
@@ -21,20 +23,26 @@ class G4UIcmdWithADoubleAndUnit;
 
 class PrimaryGeneratorMessenger: public G4UImessenger
 {
-public:
-  PrimaryGeneratorMessenger(PrimaryGeneratorAction*);
-  virtual ~PrimaryGeneratorMessenger();
+  public:
+    PrimaryGeneratorMessenger(PrimaryGeneratorAction*);
+    virtual ~PrimaryGeneratorMessenger();
     
-  void SetNewValue(G4UIcommand*, G4String);
+    void SetNewValue(G4UIcommand*, G4String);
     
-private:
-  PrimaryGeneratorAction* Action;
-  G4UIdirectory*          gunDir; 
-  G4UIcmdWithAString*     RndmCmd;
+  private:
+    PrimaryGeneratorAction* Action;
+    G4UIdirectory*          gunDir; 
+    G4UIcmdWithAString*     RndmCmd;
 
-  G4UIcmdWithADoubleAndUnit* PositionRCmd;
-  G4UIcmdWithAnInteger*      numGammaCmd;
-  G4UIcmdWithADoubleAndUnit* energyCmd[4];
+    G4UIcmdWithADoubleAndUnit* PositionXCmd;
+    G4UIcmdWithADoubleAndUnit* PositionYCmd;
+    G4UIcmdWithADoubleAndUnit* PositionZCmd;
+    G4UIcmdWithAnInteger*      numGammaCmd;
+
+    G4UIcmdWithAnInteger*      spinCmd[4];
+    G4UIcmdWithADoubleAndUnit* energyCmd[4];
+
+    G4UIcmdWithoutParameter*   PrintCmd;
   
 };
 

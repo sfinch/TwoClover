@@ -45,6 +45,14 @@ class DySample2
       
      const G4VPhysicalVolume* GetSample1()   {return physSample1;};
      const G4VPhysicalVolume* GetSample2()   {return physSample2;};
+     G4double GetSample1Thick()       {return sample1Thick;};
+     G4double GetSample1Width()       {return sample1Width;};
+     G4double GetSample1Height()      {return sample1Height;};
+     G4double GetSample2Thick()       {return sample2Thick;};
+     G4double GetSample2Width()       {return sample2Width;};
+     G4double GetSample2Height()      {return sample2Height;};
+     G4ThreeVector GetSample1Pos()    {return SamplePos1;};
+     G4ThreeVector GetSample2Pos()    {return SamplePos2;};
 
   private:
 
@@ -53,6 +61,9 @@ class DySample2
      G4LogicalVolume*   logicWorld;
      G4ThreeVector      SamplePos1;
      G4ThreeVector      SamplePos2;
+     G4ThreeVector      bagPosL;
+     G4ThreeVector      bagPosC;
+     G4ThreeVector      bagPosR;
      G4RotationMatrix*  SampleRot;
      
      G4Material*        defaultMaterial;
@@ -67,6 +78,8 @@ class DySample2
      G4double           bagThickL;
      G4double           bagThickR;
      G4double           bagThickC;
+
+     G4double           mid;
 
      G4Material*        sampleMaterial1;
      G4Material*        sampleMaterial2;
@@ -102,7 +115,12 @@ class DySample2
 
 inline void DySample2::ComputeDySampleParameters()
 {
-    
+  G4double mid = (bagThickL + bagThickR + bagThickC + sample1Thick + sample2Thick)/2;
+  bagPosL = G4ThreeVector(bagThickL/2-mid,0,0);
+  SamplePos2 = G4ThreeVector(sample2Thick/2-mid+bagThickL,0,0);
+  bagPosC = G4ThreeVector(bagThickC/2-mid+bagThickL+sample2Thick,0,0);
+  SamplePos1 = G4ThreeVector(sample1Thick/2-mid+bagThickL+sample2Thick+bagThickC,0,0);
+  bagPosR = G4ThreeVector(mid-bagThickR/2,0,0);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

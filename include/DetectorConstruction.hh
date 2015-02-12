@@ -57,12 +57,14 @@ class DetectorConstruction : public G4VUserDetectorConstruction
      NaIAnnulus* GetNaIAnnulus()        {return NaIDet;};
      DySample1* GetDySample1()          {return DySamp1;};
      DySample2* GetDySample2()          {return DySamp2;};
+     int GetSampNum()                   {return sampNum;};
 
      const G4VPhysicalVolume* GetphysiWorld() {return physiWorld;};           
                  
   private:
      
      // object properties
+     int                sampNum;
      G4double           detectorDistance;
      Clover*            CloverDet[2];
      NaIAnnulus*        NaIDet;

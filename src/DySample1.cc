@@ -115,7 +115,7 @@ void DySample1::DefineMaterials()
   sampleMaterial1->AddElement(sample1, natoms=2);
   sampleMaterial1->AddElement(O, natoms=3);
 
-  density = (0.3443/0.12446)*g/mm3;
+  density = (0.3443/0.12446)*g/cm3;
   sampleMaterial2 = new G4Material("Dy2O3_sample2", density, ncomponents=2);
   sampleMaterial2->AddElement(sample2, natoms=2);
   sampleMaterial2->AddElement(O, natoms=3);
@@ -130,10 +130,7 @@ void DySample1::BuildDySample(G4LogicalVolume *logWorld,
 
   logicWorld = logWorld;
   SampleRot = rot;
-  G4double mid = (bagThickL + bagThickR + sample1Thick)/2;
-  G4ThreeVector bagPosL = G4ThreeVector(pos->x()+bagThickL/2-mid,pos->y(),pos->z());
-  SamplePos =             G4ThreeVector(pos->x()+sample1Thick/2-mid+bagThickL,pos->y(),pos->z());
-  G4ThreeVector bagPosR = G4ThreeVector(pos->x()+bagThickR/2-mid+sample1Thick+bagThickL,pos->y(),pos->z());
+  //SamplePos = pos;
 
   G4RotationMatrix *rm = new G4RotationMatrix();
   rm->transform(*SampleRot);
